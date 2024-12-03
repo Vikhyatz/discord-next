@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
+import Navlinks from '../components/Navlinks';
 import Image from 'next/image';
 
 // icons
@@ -12,6 +13,7 @@ import { FaBell } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaUserFriends } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa6";
 
 const page = () => {
     const pathname = usePathname()
@@ -19,71 +21,41 @@ const page = () => {
     <>
     <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
     <nav className='bg-[#1E1F22] w-[72px] h-[100vh] flex items-center flex-col'>
-        <Link
-        href="/dm"
-        id="direct"
-        className={clsx(
-            'transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#5865F2] hover:rounded-[10px]',
-            {
-              'bg-[#5865F2] rounded-[10px]': pathname === "/dm",
-            },
-          )}>
-        <FaDiscord size={25}/>
-        </Link>
+
+        <Navlinks pathname={pathname} name={<FaDiscord size={25}/>} href="/dm" color="#5865F2"/>
 
         <div className="w-[30px] h-[2px] bg-[#34363B] mt-[10px]"></div>
 
-          {/* server list */}
-        <Link
-        href="/blah"
-        className={clsx(
-            "transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#5865F2] hover:rounded-[10px]",
-            {
-                'bg-[#5865F2] rounded-[10px]': pathname === "/blah",
-            },
-        )}
-        >vs
-        </Link>
-        <Link
-        href="/blah"
-        className={clsx(
-            "transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#5865F2] hover:rounded-[10px]",
-            {
-                'bg-[#5865F2] rounded-[10px]': pathname === "/blah",
-            },
-        )}
-        >ps
-        </Link>
-        <Link
-        href="/blah"
-        className={clsx(
-            "transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#5865F2] hover:rounded-[10px]",
-            {
-                'bg-[#5865F2] rounded-[10px]': pathname === "/blah",
-            },
-        )}
-        >rs
-        </Link>
 
-        <Link href="/createServer" id="create" className="transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#23A559] hover:rounded-[10px] green">
-        <FaPlus size={25}/>
-        </Link>
+        {/* server list */}
+        <Navlinks pathname={pathname} name="vs" href="/blah" color="#5865F2"/>
+        <Navlinks pathname={pathname} name="ops" href="/blah" color="#5865F2"/>
+        <Navlinks pathname={pathname} name="rs" href="/blah" color="#5865F2"/>
+
+        <Navlinks pathname={pathname} name={<FaPlus size={25}/>} href="/blah" color="#23A559"/>
 
         <div className="w-[30px] h-[2px] bg-[#34363B] mt-[10px]"></div>
 
-        <Link href="https://github.com/Vikhyatz" id="github" className="transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#23A559] hover:rounded-[10px] green"><FaGithub size={25}/></Link>
+        <Navlinks pathname={pathname} name={<FaGithub size={25}/>} href="/blah" color="#23A559"/>
         
-        <Link href="/requests" id="notifications" className="transition-all duration-300 ease-in-out w-[48px] h-[48px] bg-[#313338] rounded-[50%] flex justify-center items-center mt-[10px] text-[#DBDEE1] font-bold text-15px hover:bg-[#23A559] hover:rounded-[10px] green"><FaBell size={25}/></Link>
+        <Navlinks pathname={pathname} name={<FaBell size={25}/>} href="/blah" color="#23A559"/>
     </nav>
 
     {/* servers nav */}
 
     <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
-        <a href="/addFriends" className='w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[5px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'>
-            <FaUserFriends size={25} className='ml-[10px]'/>
+        <Link
+        href="/dm/friends"
+        className={clsx(
+          `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[5px] my-[10px] transition-all duration-[0.1s] mt-[20px] hover:bg-[#3F4248] hover:text-white`,
+          pathname === '/dm/friends' && `bg-[#3F4248] text-white`
+      )}
+        >
+            <FaUser size={24} className='ml-[20px]'/>
             <p className='ml-[10px]'>Add Friends</p>
-        </a>
-        <p className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[20px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</p>
+        </Link>
+        
+        <p className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</p>
 
         {/* <% user.friends.forEach(function(friend) { %> */}
             {/* <!-- dynamically generated friends --> */}
