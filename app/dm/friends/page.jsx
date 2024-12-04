@@ -7,24 +7,18 @@ import { usePathname } from 'next/navigation';
 import Navlinks from '../../components/Navlinks';
 import Image from 'next/image';
 import Allfriends from '@/app/components/Allfriends';
+import Requests from '@/app/components/Requests';
+import Addfriend from '@/app/components/Addfriend';
 
 // icons
-import { FaDiscord } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6"
-import { FaBell } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { FaUserFriends } from "react-icons/fa";
-import { FaGear } from "react-icons/fa6";
-import { FaUser } from "react-icons/fa6";
+import { FaDiscord,FaBell, FaGithub } from "react-icons/fa";
+import { FaPlus, FaGear, FaUser } from "react-icons/fa6"
 
 const page = () => {
   const pathname = usePathname()
 
   const [state, setstate] = useState("all")
 
-  const handleAll = ()=>{
-
-  }
 
   return (
     <>
@@ -114,15 +108,16 @@ const page = () => {
                 className={`px-[14px] py-[1px] hover:bg-[#45494f] hover:text-white rounded-[5px] text-[#949Ba4] ${state === "all" && 'bg-[#45494f] text-white'}`}>All</button>
 
                 <button onClick={()=>{setstate("requests")}} className={`px-[14px] py-[1px] hover:bg-[#45494f] hover:text-white rounded-[5px] text-[#949Ba4] ${state === "requests" && 'bg-[#45494f] text-white'}`}>Requests</button>
-                <button onClick={()=>{setstate("addFriends")}} className='px-[8px] py-[1px] text-white bg-[#248045] rounded-[5px]'>Add Friends</button>
+
+                <button onClick={()=>{setstate("addFriends")}} className={`px-[8px] py-[1px] text-white bg-[#248045] rounded-[5px] ${state === "addFriends" && 'text-[#2aae5b] bg-transparent'}`}>Add Friends</button>
 
               </div>
 
           </div>
           <div>
             {state === "all" && <Allfriends />}
-            {state === "requests" && <h1>requuests here</h1>}
-            {state === "addFriends" && <h1>add friends here</h1>}
+            {state === "requests" && <Requests />}
+            {state === "addFriends" && <Addfriend />}
           </div>
 
 
