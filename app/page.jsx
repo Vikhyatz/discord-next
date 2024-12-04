@@ -11,9 +11,9 @@ export default function Home() {
             <p className="text-[#b5bac1] mb-[20px]">We're so excited to see you again!</p>
 
             <form className="flex items-center justify-center flex-col w-full gap-[10px]" action="/login" method="post">
-                <input type="text" name="username" placeholder="Enter your username" className="w-full h-[50px] rounded-[5px] border border-solid border-[rgb(48, 45, 45)] bg-[#1E1F22] p-[10px] text-white transition duration-500 border-0 focus:border focus:border-[#5865F2] focus:placeholder:text-[#5865F2] focus:border-solid outline-0" required />
+                <input type="text" name="username" autoComplete="off" placeholder="Enter your username" className="w-full h-[50px] rounded-[5px] border border-solid border-[rgb(48, 45, 45)] bg-[#1E1F22] p-[10px] text-white transition duration-500 border-0 focus:border focus:border-[#5865F2] focus:placeholder:text-[#5865F2] focus:border-solid outline-0" required />
 
-                <input type="password" name="password" placeholder="Enter your password" className="w-full h-[50px] rounded-[5px] border border-solid border-[rgb(48, 45, 45)] bg-[#1E1F22] p-[10px] text-white transition duration-500 border-0 focus:border focus:border-[#5865F2] focus:placeholder:text-[#5865F2] focus:border-solid outline-0"
+                <input type="password" autoComplete="off" name="password" placeholder="Enter your password" className="w-full h-[50px] rounded-[5px] border border-solid border-[rgb(48, 45, 45)] bg-[#1E1F22] p-[10px] text-white transition duration-500 border-0 focus:border focus:border-[#5865F2] focus:placeholder:text-[#5865F2] focus:border-solid outline-0"
                     required />
 
                 <button className="w-full p-[10px] rounded-[5px] cursor-pointer transition duration-[300ms] mt-[20px] bg-[#5865F2] outline-0 border-0 text-white hover:opacity-[0.7]" type="submit">log in</button>
@@ -28,8 +28,3 @@ export default function Home() {
   )
 }
 
-
-export const metadata = {
-    title: "Discord | Log In",
-    description: "Log in page for discord clone",
-  };

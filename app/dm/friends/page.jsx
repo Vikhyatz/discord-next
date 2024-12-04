@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import Navlinks from '../../components/Navlinks';
 import Image from 'next/image';
+import Allfriends from '@/app/components/Allfriends';
 
 // icons
 import { FaDiscord } from "react-icons/fa";
@@ -55,7 +56,7 @@ const page = () => {
           <Link
             href="/dm/friends"
             className={clsx(
-              `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[5px] my-[10px] transition-all duration-[0.1s] mt-[20px] hover:bg-[#3F4248] hover:text-white`,
+              `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white`,
               pathname === '/dm/friends' && `bg-[#3F4248] text-white`
             )}
           >
@@ -119,7 +120,7 @@ const page = () => {
 
           </div>
           <div>
-            {state === "all" && <h1>all friends here</h1>}
+            {state === "all" && <Allfriends />}
             {state === "requests" && <h1>requuests here</h1>}
             {state === "addFriends" && <h1>add friends here</h1>}
           </div>

@@ -22,7 +22,7 @@ const page = () => {
     <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
     <nav className='bg-[#1E1F22] w-[72px] h-[100vh] flex items-center flex-col'>
 
-        <Navlinks pathname={pathname} name={<FaDiscord size={25}/>} href="/dm" color="#5865F2"/>
+        <Navlinks pathname={pathname} name={<FaDiscord size={25}/>} href="/dm/friends" color="#5865F2"/>
 
         <div className="w-[30px] h-[2px] bg-[#34363B] mt-[10px]"></div>
 
@@ -47,7 +47,7 @@ const page = () => {
         <Link
         href="/dm/friends"
         className={clsx(
-          `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[5px] my-[10px] transition-all duration-[0.1s] mt-[20px] hover:bg-[#3F4248] hover:text-white`,
+          `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white`,
           pathname === '/dm/friends' && `bg-[#3F4248] text-white`
       )}
         >
