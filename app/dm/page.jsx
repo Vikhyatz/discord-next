@@ -32,13 +32,11 @@ const page = () => {
         <Navlinks pathname={pathname} name="ops" href="/blah" color="#5865F2"/>
         <Navlinks pathname={pathname} name="rs" href="/blah" color="#5865F2"/>
 
-        <Navlinks pathname={pathname} name={<FaPlus size={25}/>} href="/blah" color="#23A559"/>
+        <Navlinks pathname={pathname} name={<FaPlus size={25}/>} href="" color="#23A559"/>
 
         <div className="w-[30px] h-[2px] bg-[#34363B] mt-[10px]"></div>
 
-        <Navlinks pathname={pathname} name={<FaGithub size={25}/>} href="/blah" color="#23A559"/>
-        
-        <Navlinks pathname={pathname} name={<FaBell size={25}/>} href="/blah" color="#23A559"/>
+        <Navlinks pathname={pathname} name={<FaGithub size={25}/>} href="https://github.com/Vikhyatz" color="#23A559"/>
     </nav>
 
     {/* servers nav */}
@@ -51,8 +49,8 @@ const page = () => {
           pathname === '/dm/friends' && `bg-[#3F4248] text-white`
       )}
         >
-            <FaUser size={24} className='ml-[20px]'/>
-            <p className='ml-[10px]'>Add Friends</p>
+            <FaUser size={20} className='ml-[20px]'/>
+            <p className='ml-[10px]'>Friends</p>
         </Link>
         
         <p className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</p>
