@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
-import CreateServer from './CreateServer'
+import CreateModal from './CreateModal'
 
 const Navlinks = ({href, pathname, name, color, type}) => {
   const [modal, setmodal] = useState("close")
@@ -20,7 +20,7 @@ const Navlinks = ({href, pathname, name, color, type}) => {
           </Link>
 
           {
-            type == "CreateServerModal" && modal === "open" && <CreateServer setmodal={setmodal} />
+            type == "CreateServerModal" && modal === "open" && <CreateModal setmodal={setmodal} type="server" />
           }
     </>
   )

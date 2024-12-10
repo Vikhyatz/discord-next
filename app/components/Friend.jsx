@@ -19,7 +19,7 @@ const Friend = ({src, name, type}) => {
 
             {
                 type === "all" && 
-                <div className='hover:bg-[#9d282c]  hover:text-[#dad9d9] text-[#DA373C] rounded-[5px] w-[150px] h-[30px] bg-[#111214] flex justify-center items-center border-[5px] border-[#111214] '>
+                <div className='hover:bg-[#9d282c]  hover:text-[#dad9d9] text-[#DA373C] rounded-[5px] w-[150px] h-[30px] bg-[#111214] flex justify-center items-center border-[5px] border-[#111214] cursor-pointer'>
                     Remove Friend
                 </div>
             }
