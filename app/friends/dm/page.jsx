@@ -1,11 +1,17 @@
 "use client"
 import React from 'react'
-import { usePathname } from 'next/navigation';
+import { usePathname, redirect } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import SideNav1 from '../../components/SideNav1';
 import SideNav2 from '../../components/SideNav2';
 
 const page = () => {
+  
+  const { data: session } = useSession()
+  if(!session){
+    redirect('/')
+  }
   const pathname = usePathname()
   return (
     <>

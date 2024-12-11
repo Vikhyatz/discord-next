@@ -6,11 +6,14 @@ import clsx from 'clsx'
 import CreateModal from './CreateModal'
 import Navlinks from './Navlinks'
 
+import { useSession } from 'next-auth/react'
+
 import { FaGear, FaUser, FaPlus } from "react-icons/fa6"
 import Channel from './Channel'
 
 
 const SideNav2 = ({ pathname, type }) => {
+    const {data : session} = useSession()
 
     const [modal, setModal] = useState("close");
 
@@ -56,7 +59,7 @@ const SideNav2 = ({ pathname, type }) => {
                         />
                     </div>
                     <p className='ml-[10px]'>
-                        Vikhyatz
+                        {session.user.name}
                     </p>
                 </div>
                 <FaGear size={40} className='mr-[20px] p-[12px] transition-all duration-[0.2s] rounded-[5px] hover:bg-[#3c3e44]' />

@@ -1,7 +1,17 @@
+"use client"
 // import Image from "next/image";
 import Link from "next/link";
+import AuthTest from "./components/AuthTest";
+
+// import { useSession } from "next-auth/react";
+// import { useRouter } from "next/navigation";
 
 export default function Home() {
+    // const { data: session } = useSession()
+    // const router = useRouter();
+    // if (session) {
+    //     router.push('/friends')
+    // }
     return (
         <>
             <div className="flex justify-center items-center w-full h-[100vh] overflow-hidden bg-[#313338] flex-col">
@@ -23,6 +33,7 @@ export default function Home() {
                         <Link href="/register" className="text-[#00a8fc] hover:underline hover:decoration-solid"> sign up </Link>
                     </div>
                 </div>
+                <AuthTest />
             </div>
         </>
     )

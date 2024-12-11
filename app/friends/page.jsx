@@ -3,7 +3,8 @@ import React from 'react'
 import { useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { redirect, usePathname } from 'next/navigation';
 import Allfriends from '@/app/components/Allfriends';
 import Requests from '@/app/components/Requests';
 import Addfriend from '@/app/components/Addfriend';
@@ -14,8 +15,14 @@ import SideNav2 from '@/app/components/SideNav2';
 // icons
 import { FaUser } from "react-icons/fa6"
 
+
 const page = () => {
+  const { data: session } = useSession()
+  if(!session){
+    redirect('/')
+  }
   const pathname = usePathname()
+  console.log(session)
 
   const [state, setstate] = useState("all")
 
