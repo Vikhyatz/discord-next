@@ -3,6 +3,8 @@ import Link from 'next/link'
 import DmFriend from './DmFriend'
 import clsx from 'clsx'
 
+import { Tooltip } from 'react-tooltip'
+
 import CreateModal from './CreateModal'
 import Navlinks from './Navlinks'
 
@@ -50,7 +52,8 @@ const SideNav2 = ({ pathname, type }) => {
             {type === "server" && <><Channel /><Channel /><Channel /><Channel /></>}
 
             <div className="w-full h-[52px] bg-[#232428] absolute bottom-0 flex justify-between items-center text-[#f2f3f5]">
-                <div className="flex items-center transition-all duration-[0.2s] p-[5px] rounded-[5px] ml-[10px] w-[150px] hover:bg-[#3c3e44]">
+            <Tooltip id="my-tooltip" />
+                <div className="flex items-center transition-all duration-[0.2s] p-[5px] rounded-[5px] ml-[10px] w-[150px] hover:bg-[#3c3e44]" data-tooltip-id="my-tooltip" data-tooltip-content={session.user.name} data-tooltip-place="top">
                     <div className="w-[32px] h-[32px] rounded-[50%] overflow-hidden ml-[10px]">
                         <img
                             alt='pfp'
@@ -58,11 +61,11 @@ const SideNav2 = ({ pathname, type }) => {
                             src="https://res.cloudinary.com/anyanime/image/upload/Luffy-anime-boy-PFPKurizu46.png"
                         />
                     </div>
-                    <p className='ml-[10px]'>
+                    <p className='ml-[10px] w-[100px] truncate' >
                         {session.user.name}
                     </p>
                 </div>
-                <FaGear size={40} className='mr-[20px] p-[12px] transition-all duration-[0.2s] rounded-[5px] hover:bg-[#3c3e44]' />
+                <FaGear size={40} className='mr-[20px] p-[12px] transition-all duration-[0.2s] rounded-[5px] hover:bg-[#3c3e44] hover:rotate-180' data-tooltip-id="my-tooltip" data-tooltip-content="User Settings" data-tooltip-place="top"/>
             </div>
         </div>
     )

@@ -1,8 +1,6 @@
 "use client"
 import React from 'react'
 import { useState } from 'react';
-import Link from 'next/link';
-import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import { redirect, usePathname } from 'next/navigation';
 import Allfriends from '@/app/components/Allfriends';

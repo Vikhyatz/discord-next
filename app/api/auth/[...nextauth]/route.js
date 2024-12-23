@@ -1,10 +1,8 @@
 import NextAuth from 'next-auth'
-// import AppleProvider from 'next-auth/providers/apple'
-// import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
-// import EmailProvider from 'next-auth/providers/email'
 import GithubProvider from 'next-auth/providers/github'
-
+import User from '@/app/models/User'
+import connectDB from '@/app/db/connectDb'
 
 const handler = NextAuth({
     providers: [
@@ -17,6 +15,31 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_SECRET
         }),
     ],
+    callbacks: {
+        async signIn({user , account, profile, email, credentials}){
+            console.log(`heyy this is the ${email}`)
+            if(account.provider == 'github'){
+                try{
+                    await connectDB();
+                }catch{
+                    console.log("database connection failed")
+                }
+                const currentUser = await User.findOne({email: profile.email});
+                if(!currentUser){
+                    const newUser = await User.create({
+                        email: profile.email,
+                        name: profile.email.split("@")[0],
+                    })
+                }
+                return true
+            }
+        },
+        async session({ session, user, token }) {
+            const dbUser = await User.findOne({email: session.user.email});
+            session.user.name = dbUser.name;
+            return session
+          },
+    }
 
 })
 

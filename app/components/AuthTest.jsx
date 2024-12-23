@@ -40,7 +40,7 @@ export default function AuthTest() {
             {/* Not signed in <br />
             <button onClick={() => signIn('github')}>Sign in</button> */}
             <button onClick={() => signIn('github')}
-                className="cursor-pointer text-zinc-200 flex gap-2 items-center bg-black px-4 py-2 rounded-lg font-medium text-sm hover:bg-[#111] transition-all ease-in duration-200"
+                className="cursor-pointer text-zinc-200 flex gap-9 items-center bg-black px-4 py-2 rounded-lg font-medium text-sm hover:bg-[#111] transition-all ease-in duration-200 justify-center active:scale-95"
             >
                 <svg
                     viewBox="0 0 24 24"
@@ -54,7 +54,7 @@ export default function AuthTest() {
                 Login with Github
             </button>
             <button onClick={() => signIn('google')}
-                className="cursor-pointer mt-[20px] text-black flex gap-2 items-center bg-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-[#111] hover:text-white transition-all ease-in duration-200"
+                className="cursor-pointer mt-[20px] text-black flex gap-9 items-center bg-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-[#111] hover:text-white transition-all ease-in duration-200 justify-center active:scale-95"
             >
                 <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-6">
                     <path
