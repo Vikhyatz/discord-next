@@ -18,7 +18,7 @@ const handler = NextAuth({
     callbacks: {
         async signIn({user , account, profile, email, credentials}){
             console.log(`heyy this is the ${email}`)
-            if(account.provider == 'github'){
+            // if(account.provider == 'github'){
                 try{
                     await connectDB();
                 }catch{
@@ -32,7 +32,7 @@ const handler = NextAuth({
                     })
                 }
                 return true
-            }
+            // }
         },
         async session({ session, user, token }) {
             const dbUser = await User.findOne({email: session.user.email});

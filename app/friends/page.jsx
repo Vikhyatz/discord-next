@@ -20,7 +20,7 @@ const page = () => {
     redirect('/')
   }
   const pathname = usePathname()
-  console.log(session)
+  // console.log(session)
 
   const [state, setstate] = useState("all")
 
