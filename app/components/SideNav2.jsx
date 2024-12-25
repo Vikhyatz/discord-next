@@ -33,7 +33,7 @@ const SideNav2 = ({ pathname, type }) => {
                 <p className='ml-[10px]'>Friends</p>
             </Link>}
 
-            {type === "server" && <div className='w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'><span className='ml-[20px]'>Vikhyat's server</span></div>}
+            {type === "server" && <div className='w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'><span className='ml-[20px]'>Vikhyat&apos;s server</span></div>}
 
             {type === "dm" && <div className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</div>}
 

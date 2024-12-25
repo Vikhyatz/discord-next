@@ -24,8 +24,8 @@ const CreateModal = ({ setmodal, type }) => {
                 </p>
                 <input className='h-[40px] w-[95%] outline-0 border-0 bg-[#1E1F22] rounded-[5px] p-[10px] text-[white] text-[16px]' type="text" placeholder={type === "server" ? "Your server's name" : "# new-channel"}/>
                 <p className='text-[#949BA4] w-full text-center mt-[50px] text-[14px]'>
-                    {type === "server" && <>By creating a server, you agree to Discord clone's <Link href='/guidlines' className='underline text-[#008afc]'>Community Guidelines</Link></>}
-                    {type === "channel" && <>By creating a channel, you agree to Discord clone's <Link href='/guidlines' className='underline text-[#008afc]'>Community Guidelines</Link></>}
+                    {type === "server" && <>By creating a server, you agree to Discord clone&apos;s <Link href='/guidlines' className='underline text-[#008afc]'>Community Guidelines</Link></>}
+                    {type === "channel" && <>By creating a channel, you agree to Discord clone&apos;s <Link href='/guidlines' className='underline text-[#008afc]'>Community Guidelines</Link></>}
                     </p>
                 <button className='p-[10px] bg-[#5865F2] text-[#ffff] outline-0 border-0 rounded-[5px] mt-[15px] transition-all duration-[0.2s] cursor-pointer'>
                     {type === "server" && "Create Server"}

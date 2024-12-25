@@ -14,7 +14,7 @@ import SideNav2 from '@/app/components/SideNav2';
 import { FaUser } from "react-icons/fa6"
 
 
-const page = () => {
+const Page = () => {
   const { data: session } = useSession()
   if(!session){
     redirect('/')
@@ -67,4 +67,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

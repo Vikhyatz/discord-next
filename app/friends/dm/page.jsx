@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import SideNav1 from '../../components/SideNav1';
 import SideNav2 from '../../components/SideNav2';
 
-const page = () => {
+const Page = () => {
   
   const { data: session } = useSession()
   if(!session){
@@ -99,4 +99,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

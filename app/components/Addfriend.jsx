@@ -17,10 +17,10 @@ const Addfriend = () => {
     setRender(""); // otherwise hidden
     
     const inpVal = inp;
-    const response = await fetch(`/api/data?query=${inp}&current=${session.user.name}`, {method: "POST"});
-    const data = await response.text();
+    const response = await fetch(`/api/data?query=${inp}&current=${session.user.name}`);
+    const data = await response.json();
     // console.log(data);
-    if(!data){
+    if(data.message){
       setText("Wrong Username, try again!!")
       console.log(data);
       console.log("wrong username, try again")
@@ -50,7 +50,7 @@ const Addfriend = () => {
                   
                 <button className='h-[30px] w-[20%] bg-[#5865F2] text-white  border-0 outline-0 rounded-[3px] disabled:cursor-not-allowed disabled:bg-[#3B418A] disabled:text-[grey] disabled:border-0 disabled:outline-0' disabled={inp === "" ? true : false} type="submit">Send Friend Request</button>
             </form>
-            <h3 className={`${renderH3} text-xl m-[20px] ${textH3 === "Request Sent!!" ? "text-[#1ac41a]" : "text-[red]"}`} >{textH3}</h3>
+            <h3 className={`${renderH3} text-xl m-[20px] ${textH3 === "Request Sent!!" ? "text-[#1ac41a]" : "text-[#f11919]"}`} >{textH3}</h3>
         </div>
     </main>
     </>

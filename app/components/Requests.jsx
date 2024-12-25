@@ -17,11 +17,12 @@ const Requests = () => {
             // })
         }
         fetchRequests()
-    }, [])
+    })
 
     if (!Array.isArray(requests)) {
-        return <div>Invalid data format</div>;
+        return <div className='text-[#b8babe] m-[30px]'>Loading...</div>;
     }
+    const pendingCount = requests.length;
     
     
     return (
@@ -29,7 +30,9 @@ const Requests = () => {
             <div className='w-full flex justify-center items-center text-[#b8babe]'>
                 <div className="w-[90%] h-fit">
 
-                    <p className='my-[30px]'>PENDING - {requests.length}</p>
+                    <p className='my-[30px]'>
+                        {(pendingCount > 0) ? `PENDING - ${pendingCount}` : "No Pending Requests"}
+                    </p>
 
                     {!requests && "Loading..."}
                     {requests.map((profile, index)=>{
