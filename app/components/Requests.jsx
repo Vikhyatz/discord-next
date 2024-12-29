@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Friend from './Friend'
 import { useSession } from 'next-auth/react'
+import RequestModal from './RequestModal'
 
 const Requests = () => {
     const {data : session} = useSession();
     const [requests, setRequests] = useState(null)
 
+    
+    const [modal, setModal] = useState("close")
+    
+
+    const fetchRequests = async ()=>{
+        const response = await fetch(`api/requests?id=${session.user.name}`);
+        const data = await response.json();
+        console.log(data)
+        setRequests(data.requests)
+    }
     useEffect(() => {
-        const fetchRequests = async ()=>{
-            const response = await fetch(`api/requests?id=${session.user.name}`);
-            const data = await response.json();
-            console.log(data)
-            setRequests(data.requests)
-            // data.requests.forEach((elem)=>{
-            //     console.log(elem.name)
-            // })
-        }
         fetchRequests()
-    })
+    }, [])
 
     if (!Array.isArray(requests)) {
         return <div className='text-[#b8babe] m-[30px]'>Loading...</div>;
@@ -36,10 +38,13 @@ const Requests = () => {
 
                     {!requests && "Loading..."}
                     {requests.map((profile, index)=>{
-                            return <Friend type="request" key={index} src="https://res.cloudinary.com/anyanime/image/upload/5eff0d8049bbdf8df8dc0762c4f526c0Kurizu39.png" name={profile.name} />    
+                            return <Friend type="request" key={index} src="https://res.cloudinary.com/anyanime/image/upload/5eff0d8049bbdf8df8dc0762c4f526c0Kurizu39.png" setModal={setModal} onUpdate={fetchRequests} name={profile.name} /> 
                     })}
                 </div>
             </div>
+            
+            {modal === "openAccept" && <RequestModal setmodal={setModal} type="accept" />}
+            {modal === "openReject" && <RequestModal setmodal={setModal} type="reject" />}
         </>
     )
 }

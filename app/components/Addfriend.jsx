@@ -5,11 +5,10 @@ import { useSession } from 'next-auth/react';
 const Addfriend = () => {
   const {data : session } = useSession();
 
-
   const inpRef = useRef(null);
   const [inp, setinp] = useState("")
   const [renderH3 , setRender] = useState("hidden")
-  const [textH3, setText] = useState("Wrong Username, try again!!")
+  const [textH3, setText] = useState("Loading....")
 
   const handleQuery = async (e)=>{
 
@@ -17,16 +16,16 @@ const Addfriend = () => {
     setRender(""); // otherwise hidden
     
     const inpVal = inp;
-    const response = await fetch(`/api/data?query=${inp}&current=${session.user.name}`);
+    const response = await fetch(`/api/addFriend?query=${inp}&current=${session.user.name}`);
     const data = await response.json();
-    // console.log(data);
-    if(data.message){
-      setText("Wrong Username, try again!!")
+    console.log(data);
+    if(data.message){ 
+      setText(data.message)
       console.log(data);
       console.log("wrong username, try again")
-    }else{
+    }
+    else{
       setText("Request Sent!!")
-      // console
       console.log("sent request")
       console.log(data);
     }
@@ -50,7 +49,7 @@ const Addfriend = () => {
                   
                 <button className='h-[30px] w-[20%] bg-[#5865F2] text-white  border-0 outline-0 rounded-[3px] disabled:cursor-not-allowed disabled:bg-[#3B418A] disabled:text-[grey] disabled:border-0 disabled:outline-0' disabled={inp === "" ? true : false} type="submit">Send Friend Request</button>
             </form>
-            <h3 className={`${renderH3} text-xl m-[20px] ${textH3 === "Request Sent!!" ? "text-[#1ac41a]" : "text-[#f11919]"}`} >{textH3}</h3>
+            <h3 className={`${renderH3} text-xl m-[20px] ${textH3 === "Request Sent!!" ? "text-[#1ac41a]" : "text-[#ff0000]"}`} >{textH3}</h3>
         </div>
     </main>
     </>
