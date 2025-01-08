@@ -14,6 +14,7 @@ const SideNav1 = ({pathname}) => {
             <div className="w-[30px] h-[2px] bg-[#34363B] mt-[10px]"></div>
 
             {/* server list */}
+            {/* DISPLAY THE SERVERS HERE */}
             <Navlinks pathname={pathname} name="vs" href="/server" color="#5865F2" />
             <Navlinks pathname={pathname} name="ops" href="/server" color="#5865F2" />
             <Navlinks pathname={pathname} name="rs" href="/server" color="#5865F2" />

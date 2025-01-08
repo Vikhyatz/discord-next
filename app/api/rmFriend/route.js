@@ -21,6 +21,4 @@ export async function POST(request) {
     )
 
     return new Response(JSON.stringify({ message: "removed friend" }), { status: 200 })
-
-
 }

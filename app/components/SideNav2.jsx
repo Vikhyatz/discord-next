@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
 import DmFriend from './DmFriend'
 import clsx from 'clsx'
@@ -16,6 +16,23 @@ import Channel from './Channel'
 
 const SideNav2 = ({ pathname, type }) => {
     const {data : session} = useSession()
+    const [friends, setFriends] = useState([{name: "Loading..."}])
+    // console.log(session);
+    useEffect(() => {
+        const fetchFriends = async ()=>{
+            const response = await fetch(`/api/friends?current=${session.user.name}`);
+            const data = await response.json();
+            console.log("this is the data for the direct messages: ", data)
+            setFriends(data.user.friends);
+        }
+        fetchFriends()
+    }, [])
+
+    if(!Array.isArray(friends)){
+        return ("hello")
+    }
+    
+    console.log(friends)
 
     const [modal, setModal] = useState("close");
 
@@ -48,8 +65,17 @@ const SideNav2 = ({ pathname, type }) => {
                 modal === "open" && <CreateModal setmodal={setModal} type="channel" />
             }
 
-            {type === "dm" && <><DmFriend /> <DmFriend /> <DmFriend /> <DmFriend /></>}
-            {type === "server" && <><Channel /><Channel /><Channel /><Channel /></>}
+            {
+            type === "dm" &&
+            friends.map((friend, index)=>{
+                return <DmFriend key={index} name={friend.name}/>
+            })
+            //  <><DmFriend /> <DmFriend /> <DmFriend /> <DmFriend /></>
+            }
+            {
+            type === "server" &&
+            <><Channel /><Channel /><Channel /><Channel /></>
+            }
 
             <div className="w-full h-[52px] bg-[#232428] absolute bottom-0 flex justify-between items-center text-[#f2f3f5]">
             <Tooltip id="my-tooltip" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-const DmFriend = () => {
+const DmFriend = ({name}) => {
     return (
         <>
         {/* TODO: write the code to assign the classes when the pathname is set to this friends direct message */}
@@ -10,7 +10,7 @@ const DmFriend = () => {
                     <img className='w-[32px]' src="https://res.cloudinary.com/anyanime/image/upload/Cool-ichigo-kurosaki-PFPKurizu71.png" alt="pfp" />
                 </div>
                 <p className='ml-[10px]'>
-                    Saksham
+                    {name}
                 </p>
             </Link>
         </>

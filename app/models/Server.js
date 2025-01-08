@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const serverSchema = [{
+const serverSchema = mongoose.Schema({
     serverName: String,
     serverIcon: String,
     serverOwner: String,
@@ -12,6 +12,6 @@ const serverSchema = [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }]
-}]
+})
 
-module.exports = mongoose.models.Server || mongoose.model("Server", serverSchema);
+module.exports = mongoose.model("Server", serverSchema);
