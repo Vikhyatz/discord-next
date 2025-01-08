@@ -17,6 +17,7 @@ import Channel from './Channel'
 const SideNav2 = ({ pathname, type }) => {
     const {data : session} = useSession()
     const [friends, setFriends] = useState([{name: "Loading..."}])
+    const [modal, setModal] = useState("close");
     // console.log(session);
     useEffect(() => {
         const fetchFriends = async ()=>{
@@ -29,12 +30,11 @@ const SideNav2 = ({ pathname, type }) => {
     }, [])
 
     if(!Array.isArray(friends)){
-        return ("hello")
+        return ("loading....")
     }
     
     console.log(friends)
 
-    const [modal, setModal] = useState("close");
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
