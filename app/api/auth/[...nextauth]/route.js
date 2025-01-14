@@ -16,6 +16,12 @@ const handler = NextAuth({
         }),
     ],
     callbacks: {
+        async redirect({ url, baseUrl }) {
+            if (url === '/api/auth/signin') {
+                return `${baseUrl}/friends`;
+            }
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
         async signIn({user , account, profile, email, credentials}){
             console.log(`heyy this is the ${email}`)
             // if(account.provider == 'github'){
