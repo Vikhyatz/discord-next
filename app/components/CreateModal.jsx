@@ -3,7 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-const CreateModal = ({ setmodal, type }) => {
+const CreateModal = ({ setmodal, type, tracker }) => {
     const {data: session} = useSession();
 
     const [inputVal, setinputVal] = useState(null);
@@ -15,9 +15,17 @@ const CreateModal = ({ setmodal, type }) => {
         console.log(inputVal)
 
         // make POST request on create server to add the server in the user's server list
-        const response = await fetch(`/api/createServer?current=${session.user.name}&serverName=${inputVal}`, {method: 'POST'});
+        const response = await fetch(`/api/server?current=${session.user.name}&serverName=${inputVal}`, {method: 'POST'});
         const data = await response.json();
         console.log(data);
+        setmodal('close');
+        // if (typeof tracker === "function") {
+        //     tracker("load");  // This updates the state using setServerCreateTracker
+        //   } else {
+        //     console.error("tracker is not a function");
+        //   }
+        // TRACKER FUNCTION IS NOT WORKING HERE
+
     }
 
     return (

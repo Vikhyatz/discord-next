@@ -1,13 +1,15 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
 import CreateModal from './CreateModal'
 
-const Navlinks = ({href, pathname, name, color, type}) => {
+const Navlinks = ({href, pathname, name, color, type, tracker}) => {
   const [modal, setmodal] = useState("close")
   
-  
+  useEffect(() => {
+  }, [modal])
+
   return (
     <>
       <Link onClick={()=>{setmodal("open")}}
@@ -20,7 +22,7 @@ const Navlinks = ({href, pathname, name, color, type}) => {
           </Link>
 
           {
-            type == "CreateServerModal" && modal === "open" && <CreateModal setmodal={setmodal} type="server" />
+            type == "CreateServerModal" && modal === "open" && <CreateModal setmodal={setmodal} type="server" tracker={tracker} />
           }
     </>
   )

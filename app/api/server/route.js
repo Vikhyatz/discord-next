@@ -5,6 +5,18 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
+export async function GET(request){
+    connectDB;
+    const searchParams = request.nextUrl.searchParams;
+    const current = searchParams.get("current");
+
+    const currentUserData = await User.findOne({name: current}).populate('joinedServers');
+    
+    return new Response (JSON.stringify({joinedServers: currentUserData.joinedServers}),{status: 200})
+    
+}
+
+
 // MOSTLY DONE BUT NOT DEFINED FOR THE USER, ADD IN THE JOINED SERVERS OF THE USER, TO MAKE IT PRIVATE
 export async function POST(request){
     connectDB;
@@ -29,5 +41,13 @@ export async function POST(request){
             roomName: roomName, // random roomname for connecting through socket.io
         }]
     })
+
+    // add the server to the user's joined servers
+    const addJoinedServer = await User.findByIdAndUpdate(
+        currentUserData._id,
+        {$addToSet : {joinedServers : createServer._id}},
+        {new: true},
+    )
+
     return new Response(JSON.stringify({ message: `New server named ${serverName} created`}), { status: 200 })
 }

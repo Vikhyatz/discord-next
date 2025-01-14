@@ -18,7 +18,6 @@ const SideNav2 = ({ pathname, type }) => {
     const {data : session} = useSession()
     const [friends, setFriends] = useState([{name: "Loading..."}])
     const [modal, setModal] = useState("close");
-    // console.log(session);
     useEffect(() => {
         const fetchFriends = async ()=>{
             const response = await fetch(`/api/friends?current=${session.user.name}`);
@@ -33,7 +32,7 @@ const SideNav2 = ({ pathname, type }) => {
         return ("loading....")
     }
     
-    console.log(friends)
+    // console.log(friends)
 
 
     return (
@@ -43,7 +42,7 @@ const SideNav2 = ({ pathname, type }) => {
                 href="/friends/"
                 className={clsx(
                     `w-[224px] h-[42px] flex items-center text-[#949Ba4] rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white`,
-                    pathname === '/dm/friends' && `bg-[#3F4248] text-white`
+                    pathname === `/dm/friends` && `bg-[#3F4248] text-white`
                 )}
             >
                 <FaUser size={20} className='ml-[20px]' />
@@ -68,7 +67,7 @@ const SideNav2 = ({ pathname, type }) => {
             {
             type === "dm" &&
             friends.map((friend, index)=>{
-                return <DmFriend key={index} name={friend.name}/>
+                return <DmFriend key={index} name={friend.name} link={`/friends/dm/${friend.name}`}/>
             })
             //  <><DmFriend /> <DmFriend /> <DmFriend /> <DmFriend /></>
             }
@@ -84,7 +83,7 @@ const SideNav2 = ({ pathname, type }) => {
                         <img
                             alt='pfp'
                             className='w-[32px]'
-                            src="https://res.cloudinary.com/anyanime/image/upload/Luffy-anime-boy-PFPKurizu46.png"
+                            src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
                         />
                     </div>
                     <p className='ml-[10px] w-[100px] truncate' >

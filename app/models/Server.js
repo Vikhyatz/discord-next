@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+// import { unique } from "next/dist/build/utils";
 
 const serverSchema = mongoose.Schema({
-    serverName: String,
+    serverName: {type: String, unique: true},
     serverIcon: String,
     serverOwner: String,
     channel: [{
@@ -14,4 +15,4 @@ const serverSchema = mongoose.Schema({
     }]
 })
 
-module.exports = mongoose.model("Server", serverSchema);
+module.exports = mongoose.models.Server || mongoose.model("Server", serverSchema);
