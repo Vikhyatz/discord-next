@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://127.0.0.1:27017/hello");
+mongoose.connect(process.env.MONGODB_URI);
 
 const userSchema = mongoose.Schema({
     name: String,

@@ -19,12 +19,11 @@ const Page = () => {
 
   // TODO: CHECK IF THE FRIEND IS VALID OR NOT AND UPDATE THE NECESSAGEY NAMES THROUGH THE SLUG
   // const [friends, setFriends] = useState(null);
-  const [messages, setMessages] = useState([{sender: "vikhyatz", message: "this is the first message"}]);
+  const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState(0);
   // dynamic slug
   const slug = params.slug
   console.log(params)
-  
 
   // SOCKET IO
   const ref = useRef();
