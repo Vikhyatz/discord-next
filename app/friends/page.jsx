@@ -16,9 +16,9 @@ import { FaUser } from "react-icons/fa6"
 
 const Page = () => {
   const { data: session } = useSession()
-  // if(!session){
-  //   redirect('/')
-  // }
+  if(!session){
+    redirect('/')
+  }
   const pathname = usePathname()
   // console.log(session)
 
