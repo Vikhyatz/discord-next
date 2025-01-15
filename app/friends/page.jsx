@@ -16,18 +16,10 @@ import { FaUser } from "react-icons/fa6"
 
 
 const Page = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  
-  // Redirect if the session is not available
-  if (status === "loading") return <p>Loading...</p>;
-  if (!session) {
-    router.push("/");
-    return null;
-  }
-
-
-
+  const { data: session } = useSession()
+  // if(!session){
+  //   redirect('/')
+  // }
   const pathname = usePathname()
   // console.log(session)
 
