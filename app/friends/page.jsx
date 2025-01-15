@@ -2,6 +2,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { redirect, usePathname } from 'next/navigation';
 import Allfriends from '@/app/components/Allfriends';
 import Requests from '@/app/components/Requests';
@@ -15,10 +16,18 @@ import { FaUser } from "react-icons/fa6"
 
 
 const Page = () => {
-  const { data: session } = useSession()
-  // if(!session){
-  //   redirect('/')
-  // }
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  
+  // Redirect if the session is not available
+  if (status === "loading") return <p>Loading...</p>;
+  if (!session) {
+    router.push("/");
+    return null;
+  }
+
+
+
   const pathname = usePathname()
   // console.log(session)
 
