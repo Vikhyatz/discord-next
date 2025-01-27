@@ -27,6 +27,7 @@ const Page = () => {
 
   // SOCKET IO
   const ref = useRef();
+  const messagecontainer = useRef();
   
 
   // first use effect for the user to connect to the private room name
@@ -77,10 +78,15 @@ const Page = () => {
     console.log(inpVal)
     console.log(messages)
     ref.current.value = ''
+    
   }
 
+  useEffect(() => {
+    if (messagecontainer.current) {
+      messagecontainer.current.scrollTop = messagecontainer.current.scrollHeight;
+    }
+  }, [messages]);
   
-
   
 
   return (
@@ -103,12 +109,12 @@ const Page = () => {
             <p className="ml-4 text-[13px] text-[#808080] font-semibold">{slug}</p>
           </div>
 
-          <div className="absolute bottom-[75px] w-full max-h-[81%] overflow-auto">
+          <div ref={messagecontainer} className="absolute bottom-[75px] w-full max-h-[81%] overflow-auto">
 
                 {messages.map((message, index) => {
 
                   return (
-                  <div className="flex items-center mb-2 ml-5" key={index} >
+                  <div className="flex items-center mb-2 ml-5 mt-[20px]" key={index} >
                     <div className="w-10 h-10">
                       <img
                         src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"

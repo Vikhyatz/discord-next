@@ -54,4 +54,4 @@ const SideNav1 = ({pathname}) => {
     )
 }
 
-export default memo(SideNav1)
+export default SideNav1

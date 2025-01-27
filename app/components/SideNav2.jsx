@@ -18,6 +18,7 @@ const SideNav2 = ({ pathname, type }) => {
     const {data : session} = useSession()
     const [friends, setFriends] = useState([{name: "Loading..."}])
     const [modal, setModal] = useState("close");
+
     useEffect(() => {
         const fetchFriends = async ()=>{
             const response = await fetch(`/api/friends?current=${session.user.name}`);
@@ -32,8 +33,6 @@ const SideNav2 = ({ pathname, type }) => {
         return ("loading....")
     }
     
-    // console.log(friends)
-
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
