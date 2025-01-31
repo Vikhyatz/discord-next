@@ -4,6 +4,13 @@ import { usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 
+
+// TODO:
+// time
+// date
+// profile picture
+// friends don't update after accepting the request
+
 import { socket } from "@/app/socket";
 
 import SideNav1 from '../../../components/SideNav1';
@@ -17,18 +24,20 @@ const Page = () => {
     redirect('/')
   }
 
+  
+  
   // TODO: CHECK IF THE FRIEND IS VALID OR NOT AND UPDATE THE NECESSAGEY NAMES THROUGH THE SLUG
   // const [friends, setFriends] = useState(null);
   const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState(0);
+  const [audio] = useState(new Audio("/notification.mp3"));
   // dynamic slug
   const slug = params.slug
   console.log(params)
-
+  
   // SOCKET IO
   const ref = useRef();
   const messagecontainer = useRef();
-  
 
   // first use effect for the user to connect to the private room name
   // socket.emit("")
@@ -60,11 +69,16 @@ const Page = () => {
     // Listen for messages from the server
     const handleMessage = (message, sender) => {
       setMessages((prevMessages) => [...prevMessages, {sender: sender, message: message}]);
-    };
 
+      // basically just plays the notification sound for those who did not send the message, a little different approach maybe. just checks the name with the session name and if it is not equal, plays the sound..
+      if (sender != session.user.name){
+        audio.play();
+      }
+    };
+    
     // Subscribe to the 'chat message' event
     socket.on('receive messsage', handleMessage);
-
+    
     // Cleanup: Unsubscribe from the event on component unmount
     return () => {
       socket.off('receive messsage', handleMessage);
@@ -80,7 +94,7 @@ const Page = () => {
     ref.current.value = ''
     
   }
-
+  
   useEffect(() => {
     if (messagecontainer.current) {
       messagecontainer.current.scrollTop = messagecontainer.current.scrollHeight;
@@ -180,6 +194,9 @@ const Page = () => {
 
 
       </div >
+      {/* <audio id='yo'>
+        <source src='notification.mp3'/>
+      </audio> */}
     </>
   )
 }

@@ -33,7 +33,7 @@ app.prepare().then(() => {
       console.log(sender, "has sended the message" , value)
       // console.log(roomname, " is the roomname")
 
-      io.to(socket.room).emit('receive messsage', value, sender);
+      io.to(roomname).emit('receive messsage', value, sender);
       // console.log(value)
     });
 
