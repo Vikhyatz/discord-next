@@ -83,14 +83,23 @@ const Page = () => {
       socket.off('receive messsage', handleMessage);
     };
   }, []);
+
+  const numberPadding = (num)=>{
+    if (num < 10){
+      return `0${num}`;
+    }else{
+      return num
+    }
+  }
   
   const handleClick = (e)=>{
     e.preventDefault();
     const inpVal = ref.current.value;
     // compute date, time here and then pass below  
     const date = new Date();
-    const finalDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`; 
-    const time = `${date.getHours()}:${date.getMinutes()}`;
+    const finalDate = `${numberPadding(date.getDate())}/${numberPadding(date.getMonth()+1)}/${numberPadding(date.getFullYear())}`;
+    
+    const time = `${numberPadding(date.getHours())}:${numberPadding(date.getMinutes())}`;
     socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
     console.log(inpVal)
     console.log(messages)
