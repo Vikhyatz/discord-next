@@ -4,7 +4,6 @@ import { usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 
-
 // TODO:
 // time
 // date
@@ -67,8 +66,8 @@ const Page = () => {
     }
 
     // Listen for messages from the server
-    const handleMessage = (message, sender) => {
-      setMessages((prevMessages) => [...prevMessages, {sender: sender, message: message}]);
+    const handleMessage = (message, sender, date, time) => {
+      setMessages((prevMessages) => [...prevMessages, {sender: sender, message: message, date: date, time: time}]);
 
       // basically just plays the notification sound for those who did not send the message, a little different approach maybe. just checks the name with the session name and if it is not equal, plays the sound..
       if (sender != session.user.name){
@@ -88,7 +87,11 @@ const Page = () => {
   const handleClick = (e)=>{
     e.preventDefault();
     const inpVal = ref.current.value;
-    socket.emit("chat message", inpVal, roomName, session.user.name);
+    // compute date, time here and then pass below  
+    const date = new Date();
+    const finalDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`; 
+    const time = `${date.getHours()}:${date.getMinutes()}`;
+    socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
     console.log(inpVal)
     console.log(messages)
     ref.current.value = ''
@@ -141,7 +144,8 @@ const Page = () => {
                       <div className="flex items-baseline">
                         <p className="text-[#f2f3f5] font-semibold">{message.sender}</p>
                         <p className="ml-4 text-[13px] text-[#808080] font-semibold scale-y-95">
-                          23/09/2023 00:39
+                          {/* 23/09/2023 {message.time} */}
+                          {message.date} {message.time}
                         </p>
                       </div>
                       <div className="text-[#dbdee1]">{message.message}</div>

@@ -28,12 +28,12 @@ app.prepare().then(() => {
 
     
 
-    socket.on("chat message", (value, roomname, sender) => {
+    socket.on("chat message", (value, roomname, sender, date, time) => {
       console.log("this should be the room name strongly", socket.room);
       console.log(sender, "has sended the message" , value)
       // console.log(roomname, " is the roomname")
 
-      io.to(roomname).emit('receive messsage', value, sender);
+      io.to(roomname).emit('receive messsage', value, sender, date, time);
       // console.log(value)
     });
 
