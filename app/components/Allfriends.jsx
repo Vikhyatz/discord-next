@@ -8,6 +8,7 @@ const Allfriends = () => {
 
     const [modal, setModal] = useState("close")
 
+
     const handleFriends = async () => {
         const response = await fetch(`api/friends?current=${session.user.name}`)
         const dat = await response.json();

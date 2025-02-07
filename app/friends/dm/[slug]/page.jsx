@@ -4,11 +4,6 @@ import { usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 
-// TODO:
-// time
-// date
-// profile picture
-// friends don't update after accepting the request
 
 import { socket } from "@/app/socket";
 
@@ -24,7 +19,6 @@ const Page = () => {
   }
 
   
-  
   // TODO: CHECK IF THE FRIEND IS VALID OR NOT AND UPDATE THE NECESSAGEY NAMES THROUGH THE SLUG
   // const [friends, setFriends] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -37,6 +31,8 @@ const Page = () => {
   // SOCKET IO
   const ref = useRef();
   const messagecontainer = useRef();
+
+  
 
   // first use effect for the user to connect to the private room name
   // socket.emit("")
@@ -95,7 +91,7 @@ const Page = () => {
   const handleClick = (e)=>{
     e.preventDefault();
     const inpVal = ref.current.value;
-    // compute date, time here and then pass below  
+    // compute date, time here and then pass below
     const date = new Date();
     const finalDate = `${numberPadding(date.getDate())}/${numberPadding(date.getMonth()+1)}/${numberPadding(date.getFullYear())}`;
     

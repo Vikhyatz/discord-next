@@ -1,16 +1,19 @@
-import React, { useEffect , useState } from 'react'
+import React, { useEffect , useState, useContext } from 'react'
 import Navlinks from './Navlinks'
 import { useSession } from 'next-auth/react';
-import { memo } from 'react';
+// import { memo } from 'react';
 
 // icons
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { FaPlus} from "react-icons/fa6"
+import { serverContext } from '../context/serverContext';
 
 const SideNav1 = ({pathname}) => {
     const {data : session} = useSession();
     const [serversList, setServerList] = useState(null)
-    const [serverCreateTracker, setServerCreateTracker] = useState(null);
+    // const [serverCreateTracker, setServerCreateTracker] = useState(null);
+
+    const {serverUpdate, setServerUpdate} = useContext(serverContext)
     
     useEffect(() => {
       const fetchServers = async ()=>{
@@ -20,7 +23,7 @@ const SideNav1 = ({pathname}) => {
         // console.log("here" , data.joinedServers)
       }
       fetchServers();
-    }, [serverCreateTracker])
+    }, [serverUpdate])
 
     console.log("this is the server list ", serversList)
     
@@ -38,7 +41,9 @@ const SideNav1 = ({pathname}) => {
             {
                 !Array.isArray(serversList) ? "Loading..." :
                     serversList.map((server, index)=>{
-                    return <Navlinks pathname={pathname} key={index} name={server.serverIcon} tracker={setServerCreateTracker}  href={`/${server.serverName}`} color="#5865F2" />
+                    // return <Navlinks pathname={pathname} key={index} name={server.serverIcon} tracker={setServerCreateTracker}  href={`/${server.serverName}`} color="#5865F2" />
+                    return <Navlinks pathname={pathname} key={index} name={server.serverIcon}  href={`/server`} color="#5865F2" />
+
                 })
             }
             

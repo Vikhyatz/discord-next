@@ -1,10 +1,14 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useContext} from 'react'
 import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { serverContext } from '../context/serverContext';
 
-const CreateModal = ({ setmodal, type, tracker }) => {
+const CreateModal = ({ setmodal, type }) => {
     const {data: session} = useSession();
+
+    const {serverUpdate, setServerUpdate} = useContext(serverContext)
+
 
     const [inputVal, setinputVal] = useState(null);
     const ref = useRef("")
@@ -19,6 +23,7 @@ const CreateModal = ({ setmodal, type, tracker }) => {
         const data = await response.json();
         console.log(data);
         setmodal('close');
+        setServerUpdate("update kardo")
         // if (typeof tracker === "function") {
         //     tracker("load");  // This updates the state using setServerCreateTracker
         //   } else {

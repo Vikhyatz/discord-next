@@ -8,8 +8,13 @@ import Allfriends from '@/app/components/Allfriends';
 import Requests from '@/app/components/Requests';
 import Addfriend from '@/app/components/Addfriend';
 
+
+
 import SideNav1 from '@/app/components/SideNav1';
 import SideNav2 from '@/app/components/SideNav2';
+
+import { requestModalContext } from '../context/reqContext'
+import { serverContext } from '../context/serverContext';
 
 // icons
 import { FaUser } from "react-icons/fa6"
@@ -20,7 +25,9 @@ const Page = () => {
   // console.log(session)
 
   const [state, setstate] = useState("all")
-  
+  const [reqModal, setReqModal] = useState("close")
+  const [serverUpdate, setServerUpdate] = useState("update")
+
   
   const { data: session, status } = useSession();
   // const router = useRouter();
@@ -35,6 +42,8 @@ const Page = () => {
 
   return (
     <>
+    <requestModalContext.Provider value={{reqModal, setReqModal}} >
+      <serverContext.Provider value={{serverUpdate, setServerUpdate}}>
       <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
         <SideNav1 pathname={pathname}/>
         <SideNav2 pathname={pathname} type="dm"/>
@@ -72,6 +81,8 @@ const Page = () => {
 
 
       </div>
+      </serverContext.Provider>
+      </requestModalContext.Provider>
     </>
   )
 }

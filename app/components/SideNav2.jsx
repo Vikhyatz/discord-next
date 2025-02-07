@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import Link from 'next/link'
 import DmFriend from './DmFriend'
 import clsx from 'clsx'
@@ -12,12 +12,15 @@ import { useSession } from 'next-auth/react'
 
 import { FaGear, FaUser, FaPlus } from "react-icons/fa6"
 import Channel from './Channel'
+import { requestModalContext } from '../context/reqContext'
 
 
 const SideNav2 = ({ pathname, type }) => {
     const {data : session} = useSession()
     const [friends, setFriends] = useState([{name: "Loading..."}])
-    const [modal, setModal] = useState("close");
+    const [channelModal, setChannelModal] = useState("close");
+
+    const {reqModal, setReqModal} = useContext(requestModalContext)
 
     useEffect(() => {
         const fetchFriends = async ()=>{
@@ -27,7 +30,19 @@ const SideNav2 = ({ pathname, type }) => {
             setFriends(data.user.friends);
         }
         fetchFriends()
-    }, [])
+    }, [reqModal])
+
+
+    // fetch the updated data when the user accepts the friend request
+    // useEffect(() => {
+    //     const fetchFriends = async ()=>{
+    //         const response = await fetch(`/api/friends?current=${session.user.name}`);
+    //         const data = await response.json();
+    //         console.log("this is after the user makes a new frienddd:::::::: ", data)
+    //         setFriends(data.user.friends);
+    //     }
+    //     fetchFriends()
+    // }, [modal])
 
     if(!Array.isArray(friends)){
         return ("loading....")
@@ -60,7 +75,7 @@ const SideNav2 = ({ pathname, type }) => {
                 </div>
             }
             {
-                modal === "open" && <CreateModal setmodal={setModal} type="channel" />
+                channelModal === "open" && <CreateModal setmodal={setChannelModal} type="channel" />
             }
 
             {
