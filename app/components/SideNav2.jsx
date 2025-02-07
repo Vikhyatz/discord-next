@@ -15,7 +15,7 @@ import Channel from './Channel'
 import { requestModalContext } from '../context/reqContext'
 
 
-const SideNav2 = ({ pathname, type }) => {
+const SideNav2 = ({ pathname, type, serverSlug }) => {
     const {data : session} = useSession()
     const [friends, setFriends] = useState([{name: "Loading..."}])
     const [channelModal, setChannelModal] = useState("close");
@@ -32,17 +32,11 @@ const SideNav2 = ({ pathname, type }) => {
         fetchFriends()
     }, [reqModal])
 
-
-    // fetch the updated data when the user accepts the friend request
-    // useEffect(() => {
-    //     const fetchFriends = async ()=>{
-    //         const response = await fetch(`/api/friends?current=${session.user.name}`);
-    //         const data = await response.json();
-    //         console.log("this is after the user makes a new frienddd:::::::: ", data)
-    //         setFriends(data.user.friends);
+    // useEffect(()=>{
+    //     const fetchChannels = async ()=>{
+    //         const response = await fetch(`api/channels?server=${}`)
     //     }
-    //     fetchFriends()
-    // }, [modal])
+    // })
 
     if(!Array.isArray(friends)){
         return ("loading....")
@@ -63,7 +57,7 @@ const SideNav2 = ({ pathname, type }) => {
                 <p className='ml-[10px]'>Friends</p>
             </Link>}
 
-            {type === "server" && <div className='w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'><span className='ml-[20px]'>Vikhyat&apos;s server</span></div>}
+            {type === "server" && <div className='w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'><span className='ml-[20px]'>{serverSlug}</span></div>}
 
             {type === "dm" && <div className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</div>}
 

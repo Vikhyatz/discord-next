@@ -42,7 +42,7 @@ const SideNav1 = ({pathname}) => {
                 !Array.isArray(serversList) ? "Loading..." :
                     serversList.map((server, index)=>{
                     // return <Navlinks pathname={pathname} key={index} name={server.serverIcon} tracker={setServerCreateTracker}  href={`/${server.serverName}`} color="#5865F2" />
-                    return <Navlinks pathname={pathname} key={index} name={server.serverIcon}  href={`/server`} color="#5865F2" />
+                    return <Navlinks pathname={pathname} key={index} name={server.serverIcon}  href={`/server/${server.serverName}`} color="#5865F2" />
 
                 })
             }

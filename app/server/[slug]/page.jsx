@@ -1,23 +1,29 @@
 "use client"
 import React from 'react'
-import { usePathname, redirect } from 'next/navigation';
+import { usePathname, redirect, useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-import SideNav1 from '../components/SideNav1';
-import SideNav2 from '../components/SideNav2';
+// TODO:
+// fetch real channels from the server and render them
+
+import SideNav1 from '../../components/SideNav1';
+import SideNav2 from '../../components/SideNav2';
 
 const Page = () => {
 
+    const params = useParams();
     const { data: session } = useSession()
     if (!session) {
         redirect('/')
     }
     const pathname = usePathname()
+
+    const slug = decodeURIComponent(params.slug);
     return (
         <>
             <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
                 <SideNav1 pathname={pathname} />
-                <SideNav2 pathname={pathname} type="server" />
+                <SideNav2 pathname={pathname} type="server" serverSlug={slug} />
 
                 <main className="relative w-[calc(100%-312px)]">
                     <div className="flex items-center w-full h-11 bg-[#313338] border-b-[1.5px] border-[#131313] text-white font-semibold text-base">

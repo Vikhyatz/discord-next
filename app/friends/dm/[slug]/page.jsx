@@ -25,7 +25,7 @@ const Page = () => {
   const [roomName, setRoomName] = useState(0);
   const [audio] = useState(new Audio("/notification.mp3"));
   // dynamic slug
-  const slug = params.slug
+  const slug = decodeURIComponent(params.slug)
   console.log(params)
   
   // SOCKET IO
