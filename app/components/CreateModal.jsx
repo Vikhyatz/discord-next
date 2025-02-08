@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { serverContext } from '../context/serverContext';
 
-const CreateModal = ({ setmodal, type }) => {
+const CreateModal = ({ setmodal, type, serverName }) => {
     const {data: session} = useSession();
 
     const {serverUpdate, setServerUpdate} = useContext(serverContext)
@@ -13,7 +13,9 @@ const CreateModal = ({ setmodal, type }) => {
     const [inputVal, setinputVal] = useState(null);
     const ref = useRef("")
 
-    const handleSubmit = async ()=>{
+
+    // handle submit function for the creation of a server
+    const handleServerSubmit = async ()=>{
         // this is the input value, logged when the submit button is clicked
         let inputVal = ref.current.value
         console.log(inputVal)
@@ -23,14 +25,18 @@ const CreateModal = ({ setmodal, type }) => {
         const data = await response.json();
         console.log(data);
         setmodal('close');
-        setServerUpdate("update kardo")
-        // if (typeof tracker === "function") {
-        //     tracker("load");  // This updates the state using setServerCreateTracker
-        //   } else {
-        //     console.error("tracker is not a function");
-        //   }
-        // TRACKER FUNCTION IS NOT WORKING HERE
+        setServerUpdate("Please update")
+    }
 
+    // TODO: handle submit for the creation of a channel inside a particular server
+    const handleChannelSubmit = async ()=>{
+        let inputVal = ref.current.value;
+
+        const response = await fetch(`/api/channels?server=${serverName}&channelName=${inputVal}`, {method: 'POST'});
+        const data = await response.json();
+        console.log(data)
+        setmodal('close');
+        // update the list of channels after creating one
     }
 
     return (
@@ -41,7 +47,7 @@ const CreateModal = ({ setmodal, type }) => {
                 </div>
                 <h1 className='text-[#f2f3f5] font-bold text-[20px] mt-[20px]'>
                     {type === "server" && "Vikhyatz, Create Your Server"}
-                    {type === "channel" && "Create Channel in jungbir ka server"}
+                    {type === "channel" && `Create Channel in ${serverName}`}
                 </h1>
                 <p className='text-[#b5bac1] text-center w-[90%] mt-[10px]'>
                 {type === "server" && "Give your new server a personality with new name. You can never change it later"}
@@ -51,7 +57,6 @@ const CreateModal = ({ setmodal, type }) => {
                     {type === "server" && "SERVER NAME"}
                     {type === "channel" && "CHANNEL NAME"}
                 </p>
-                {/* <form> */}
                     <input className='h-[40px] w-[95%] outline-0 border-0 bg-[#1E1F22] rounded-[5px] p-[10px] text-[white] text-[16px]' type="text" ref={ref} placeholder={type === "server" ? "Your server's name" : "# new-channel"}/>
 
                     <p className='text-[#949BA4] w-full text-center mt-[50px] text-[14px]'>
@@ -59,11 +64,10 @@ const CreateModal = ({ setmodal, type }) => {
                         {type === "channel" && <>By creating a channel, you agree to Discord clone&apos;s <Link href='/guidlines' className='underline text-[#008afc]'>Community Guidelines</Link></>}
                         </p>
 
-                    <button onClick={handleSubmit} className='p-[10px] bg-[#5865F2] text-[#ffff] outline-0 border-0 rounded-[5px] mt-[15px] transition-all duration-[0.2s] cursor-pointer'>
+                    <button onClick={type === 'channel' ? handleChannelSubmit : handleServerSubmit} className='p-[10px] bg-[#5865F2] text-[#ffff] outline-0 border-0 rounded-[5px] mt-[15px] transition-all duration-[0.2s] cursor-pointer'>
                         {type === "server" && "Create Server"}
                         {type === "channel" && "Create Channel"}
                     </button>
-                {/* </form> */}
             </div>
         </div>
     )

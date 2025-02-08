@@ -20,28 +20,45 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
     const [friends, setFriends] = useState([{name: "Loading..."}])
     const [channelModal, setChannelModal] = useState("close");
 
+    const [channels, setChannels] = useState([{channelName: "loading..."}])
+
     const {reqModal, setReqModal} = useContext(requestModalContext)
 
-    useEffect(() => {
-        const fetchFriends = async ()=>{
-            const response = await fetch(`/api/friends?current=${session.user.name}`);
-            const data = await response.json();
-            console.log("this is the data for the direct messages: ", data)
-            setFriends(data.user.friends);
-        }
-        fetchFriends()
-    }, [reqModal])
-
-    // useEffect(()=>{
-    //     const fetchChannels = async ()=>{
-    //         const response = await fetch(`api/channels?server=${}`)
-    //     }
-    // })
-
-    if(!Array.isArray(friends)){
-        return ("loading....")
+    if(type === "dm"){
+        useEffect(() => {
+            const fetchFriends = async ()=>{
+                const response = await fetch(`/api/friends?current=${session.user.name}`);
+                const data = await response.json();
+                console.log("this is the data for the direct messages: ", data)
+                setFriends(data.user.friends);
+            }
+            fetchFriends()
+        }, [reqModal])
     }
-    
+
+    if(type === "server"){
+        useEffect(()=>{
+            const fetchChannels = async ()=>{
+                const response = await fetch(`/api/channels?server=${decodeURIComponent(serverSlug)}`)
+                const data = await response.json()
+                // console.log("this is the data of channels from the server", data.channels.channel)
+                setChannels(data.channels.channel)
+            }
+            fetchChannels();
+        }, [])
+    }
+
+    if(type === "dm"){
+        if(!Array.isArray(friends)){
+            return ("loading....")
+        }
+    }
+
+    if(type === "server"){
+        if(!Array.isArray(channels)){
+            return ("404 not found")
+        }
+    }
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
@@ -64,24 +81,30 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             {/* this modal is not working */}
             {/* <Navlinks pathname={pathname} name={<FaPlus size={25} />} type="CreateChannelModal" href="" color="#23A559" /> */}
             {type === "server" &&
-                <div className="w-[200px] text-[#949Ba4] text-[13px] flex justify-between items-center font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white" onClick={()=>{setModal("open")}}>
+                <div className="w-[200px] text-[#949Ba4] text-[13px] flex justify-between items-center font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white" onClick={()=>{setChannelModal("open")}}>
                     TEXT CHANNELS <FaPlus />
                 </div>
             }
             {
-                channelModal === "open" && <CreateModal setmodal={setChannelModal} type="channel" />
+                channelModal === "open" && <CreateModal setmodal={setChannelModal} type="channel" serverName={serverSlug} />
             }
 
+
+            {/* friends list for the dms page */}
             {
             type === "dm" &&
             friends.map((friend, index)=>{
                 return <DmFriend key={index} name={friend.name} link={`/friends/dm/${friend.name}`}/>
             })
-            //  <><DmFriend /> <DmFriend /> <DmFriend /> <DmFriend /></>
             }
+
+
+            {/* server channels for the server page */}
             {
-            type === "server" &&
-            <><Channel /><Channel /><Channel /><Channel /></>
+                type === "server" && 
+                channels.map((channel, index)=>{
+                    return <Channel key={index} name={channel.channelName}/>
+                })
             }
 
             <div className="w-full h-[52px] bg-[#232428] absolute bottom-0 flex justify-between items-center text-[#f2f3f5]">

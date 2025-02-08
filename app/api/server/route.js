@@ -48,6 +48,8 @@ export async function POST(request){
         {$addToSet : {joinedServers : createServer._id}},
         {new: true},
     )
+    console.log(addJoinedServer)
+    console.log(currentUserData)
 
     return new Response(JSON.stringify({ message: `New server named ${serverName} created`}), { status: 200 })
 }
