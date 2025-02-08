@@ -24,7 +24,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
     const {reqModal, setReqModal} = useContext(requestModalContext)
 
-    if(type === "dm"){
+    // if(type === "dm"){
         useEffect(() => {
             const fetchFriends = async ()=>{
                 const response = await fetch(`/api/friends?current=${session.user.name}`);
@@ -34,9 +34,9 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             }
             fetchFriends()
         }, [reqModal])
-    }
+    // }
 
-    if(type === "server"){
+    // if(type === "server"){
         useEffect(()=>{
             const fetchChannels = async ()=>{
                 const response = await fetch(`/api/channels?server=${decodeURIComponent(serverSlug)}`)
@@ -46,7 +46,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             }
             fetchChannels();
         }, [])
-    }
+    // }
 
     if(type === "dm"){
         if(!Array.isArray(friends)){
