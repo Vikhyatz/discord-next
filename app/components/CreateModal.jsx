@@ -3,11 +3,13 @@ import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { serverContext } from '../context/serverContext';
+import { channelModalContext } from '../context/channelContext';
 
 const CreateModal = ({ setmodal, type, serverName }) => {
     const {data: session} = useSession();
 
     const {serverUpdate, setServerUpdate} = useContext(serverContext)
+    const {channelUpdate, setChannelUpdate} = useContext(channelModalContext)
 
 
     const [inputVal, setinputVal] = useState(null);
@@ -25,7 +27,10 @@ const CreateModal = ({ setmodal, type, serverName }) => {
         const data = await response.json();
         console.log(data);
         setmodal('close');
-        setServerUpdate("Please update")
+
+        // random number for dynamic updating of the server after creating one
+        const randomNum = Math.floor(Math.random() * 100);
+        setServerUpdate(`Please update${randomNum}`)
     }
 
     // TODO: handle submit for the creation of a channel inside a particular server
@@ -36,7 +41,10 @@ const CreateModal = ({ setmodal, type, serverName }) => {
         const data = await response.json();
         console.log(data)
         setmodal('close');
-        // update the list of channels after creating one
+
+        // random number for dynamic updating of the channel after creating one
+        const randomNum = Math.floor(Math.random() * 100);
+        setChannelUpdate(`please update${randomNum}`)
     }
 
     return (

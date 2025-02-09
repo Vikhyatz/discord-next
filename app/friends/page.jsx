@@ -26,7 +26,7 @@ const Page = () => {
 
   const [state, setstate] = useState("all")
   const [reqModal, setReqModal] = useState("close")
-  const [serverUpdate, setServerUpdate] = useState("update")
+  
 
   
   const { data: session, status } = useSession();
@@ -43,7 +43,7 @@ const Page = () => {
   return (
     <>
     <requestModalContext.Provider value={{reqModal, setReqModal}} >
-      <serverContext.Provider value={{serverUpdate, setServerUpdate}}>
+      
       <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
         <SideNav1 pathname={pathname}/>
         <SideNav2 pathname={pathname} type="dm"/>
@@ -81,7 +81,6 @@ const Page = () => {
 
 
       </div>
-      </serverContext.Provider>
       </requestModalContext.Provider>
     </>
   )

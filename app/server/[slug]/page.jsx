@@ -1,7 +1,8 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { usePathname, redirect, useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { channelModalContext } from '@/app/context/channelContext';
 
 // TODO:
 // fetch real channels from the server and render them
@@ -18,9 +19,12 @@ const Page = () => {
     }
     const pathname = usePathname()
 
+    const [channelUpdate, setChannelUpdate] = useState("update")
+
     const slug = decodeURIComponent(params.slug);
     return (
         <>
+        <channelModalContext.Provider value={{channelUpdate, setChannelUpdate}}>
             <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
                 <SideNav1 pathname={pathname} />
                 <SideNav2 pathname={pathname} type="server" serverSlug={slug} />
@@ -84,6 +88,7 @@ const Page = () => {
 
 
             </div >
+            </channelModalContext.Provider>
         </>
     )
 }

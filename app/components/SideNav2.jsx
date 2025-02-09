@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react'
 import { FaGear, FaUser, FaPlus } from "react-icons/fa6"
 import Channel from './Channel'
 import { requestModalContext } from '../context/reqContext'
+import { channelModalContext } from '../context/channelContext'
 
 
 const SideNav2 = ({ pathname, type, serverSlug }) => {
@@ -24,29 +25,32 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
     const {reqModal, setReqModal} = useContext(requestModalContext)
 
+    const {channelUpdate, setChannelUpdate} = useContext(channelModalContext)
+
     // if(type === "dm"){
-        useEffect(() => {
-            const fetchFriends = async ()=>{
-                const response = await fetch(`/api/friends?current=${session.user.name}`);
-                const data = await response.json();
-                console.log("this is the data for the direct messages: ", data)
-                setFriends(data.user.friends);
-            }
-            fetchFriends()
-        }, [reqModal])
+    useEffect(() => {
+        const fetchFriends = async ()=>{
+            const response = await fetch(`/api/friends?current=${session.user.name}`);
+            const data = await response.json();
+            console.log("this is the data for the direct messages: ", data)
+            setFriends(data.user.friends);
+        }
+        fetchFriends()
+    }, [reqModal])
     // }
 
-    // if(type === "server"){
-        useEffect(()=>{
-            const fetchChannels = async ()=>{
+    useEffect(()=>{
+        const fetchChannels = async ()=>{
+            if(type === "server"){
                 const response = await fetch(`/api/channels?server=${decodeURIComponent(serverSlug)}`)
                 const data = await response.json()
                 // console.log("this is the data of channels from the server", data.channels.channel)
                 setChannels(data.channels.channel)
             }
-            fetchChannels();
-        }, [])
-    // }
+        }
+        
+        fetchChannels();
+    }, [channelUpdate])
 
     if(type === "dm"){
         if(!Array.isArray(friends)){
@@ -56,7 +60,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
     if(type === "server"){
         if(!Array.isArray(channels)){
-            return ("404 not found")
+            return ("Loading....")
         }
     }
 

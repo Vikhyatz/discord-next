@@ -13,7 +13,6 @@ export async function GET(request) {
     const channels = await Server.findOne({serverName: server});
     // console.log(channels)
     return new Response (JSON.stringify({channels}), {status: 200})
-    
 }
 
 
