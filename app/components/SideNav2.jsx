@@ -3,6 +3,12 @@ import Link from 'next/link'
 import DmFriend from './DmFriend'
 import clsx from 'clsx'
 
+import { signOut } from "next-auth/react"
+
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+
 import { Tooltip } from 'react-tooltip'
 
 import CreateModal from './CreateModal'
@@ -11,9 +17,11 @@ import Navlinks from './Navlinks'
 import { useSession } from 'next-auth/react'
 
 import { FaGear, FaUser, FaPlus } from "react-icons/fa6"
+import { IoIosLogOut } from "react-icons/io";
 import Channel from './Channel'
 import { requestModalContext } from '../context/reqContext'
 import { channelModalContext } from '../context/channelContext'
+import { redirect } from 'next/navigation';
 
 
 const SideNav2 = ({ pathname, type, serverSlug }) => {
@@ -22,12 +30,16 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
     const [channelModal, setChannelModal] = useState("close");
 
     const [channels, setChannels] = useState([{channelName: "loading..."}])
+    const [serverOwner, setServerOwner] = useState("")
 
+    // to handle the dropdown, for deleting the server
+    const [selected, setSelected] = useState(false)
+    
     const {reqModal, setReqModal} = useContext(requestModalContext)
 
     const {channelUpdate, setChannelUpdate} = useContext(channelModalContext)
 
-    // if(type === "dm"){
+
     useEffect(() => {
         const fetchFriends = async ()=>{
             const response = await fetch(`/api/friends?current=${session.user.name}`);
@@ -37,20 +49,29 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
         }
         fetchFriends()
     }, [reqModal])
-    // }
 
     useEffect(()=>{
         const fetchChannels = async ()=>{
             if(type === "server"){
-                const response = await fetch(`/api/channels?server=${decodeURIComponent(serverSlug)}`)
+                const response = await fetch(`/api/serverData?server=${decodeURIComponent(serverSlug)}`)
                 const data = await response.json()
-                // console.log("this is the data of channels from the server", data.channels.channel)
-                setChannels(data.channels.channel)
+                console.log("this is the data of channels from the server", data)
+                setChannels(data.serverData.channel)
+                setServerOwner(data.serverData.serverOwner.name)
+                console.log("the server owner value will be: ", data.serverData.serverOwner.name)
             }
         }
         
         fetchChannels();
     }, [channelUpdate])
+
+    // function to handle server deletion
+    const deleteServer = async ()=>{
+        const response = await fetch(`/api/deleteServer?serverName=${serverSlug}`)
+        const data = await response.json()
+        console.log(data)
+        redirect('/friends')
+    }
 
     if(type === "dm"){
         if(!Array.isArray(friends)){
@@ -63,6 +84,9 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             return ("Loading....")
         }
     }
+
+    console.log(serverOwner)
+    console.log(session.user.name)
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
@@ -78,15 +102,33 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
                 <p className='ml-[10px]'>Friends</p>
             </Link>}
 
-            {type === "server" && <div className='w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white'><span className='ml-[20px]'>{serverSlug}</span></div>}
+            {type === "server" && 
+            <>
+            <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={()=>{ serverOwner == session.user.name && setSelected(!selected)} } >
+                <span className='ml-[20px]'>{serverSlug}</span>
+                {/* {serverOwner == session.user.name
+                } */}
+                {serverOwner == session.user.name && 
+                (
+                    selected ? (<MdKeyboardArrowUp className='absolute right-[20px]' size={30}/>) : (<MdKeyboardArrowDown className='absolute right-[20px]' size={30}/>)
+                )
+                }
+                
+            </div>
+                {/* dropdown  */}
+                {selected && 
+                <button onClick={deleteServer} className='bottom-[-40px] bg-[black] w-[224px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20}/></button>
+                }
+            </>
+            }
 
             {type === "dm" && <div className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</div>}
 
             {/* this modal is not working */}
             {/* <Navlinks pathname={pathname} name={<FaPlus size={25} />} type="CreateChannelModal" href="" color="#23A559" /> */}
             {type === "server" &&
-                <div className="w-[200px] text-[#949Ba4] text-[13px] flex justify-between items-center font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white" onClick={()=>{setChannelModal("open")}}>
-                    TEXT CHANNELS <FaPlus />
+                <div className="w-[200px] text-[#949Ba4] text-[13px] flex justify-between items-center font-bold p-[10px] pt-[15px] mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white select-none cursor-pointer" onClick={()=>{serverOwner === session.user.name && setChannelModal("open")}}>
+                    TEXT CHANNELS {serverOwner === session.user.name ? <FaPlus /> : null}
                 </div>
             }
             {
@@ -125,7 +167,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
                         {session.user.name}
                     </p>
                 </div>
-                <FaGear size={40} className='mr-[20px] p-[12px] transition-all duration-[0.2s] rounded-[5px] hover:bg-[#3c3e44] hover:rotate-180' data-tooltip-id="my-tooltip" data-tooltip-content="User Settings" data-tooltip-place="top"/>
+                <IoIosLogOut onClick={()=>{signOut()}} size={42} className='text-[red] p-[10px] mr-[20px] rounded-[5px] hover:bg-[#3c3e44]' data-tooltip-id="my-tooltip" data-tooltip-content="Log Out" data-tooltip-place="top"/>
             </div>
         </div>
     )

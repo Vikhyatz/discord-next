@@ -10,6 +10,8 @@ const Addfriend = () => {
   const [renderH3 , setRender] = useState("hidden")
   const [textH3, setText] = useState("Loading....")
 
+  const [selected, setSelected] = useState('');
+
   const handleQuery = async (e)=>{
 
     e.preventDefault();
@@ -52,6 +54,8 @@ const Addfriend = () => {
             <h3 className={`${renderH3} text-xl m-[20px] ${textH3 === "Request Sent!!" ? "text-[#1ac41a]" : "text-[#ff0000]"}`} >{textH3}</h3>
         </div>
     </main>
+    
+
     </>
   )
 }

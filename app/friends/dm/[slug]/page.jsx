@@ -96,9 +96,9 @@ const Page = () => {
     const finalDate = `${numberPadding(date.getDate())}/${numberPadding(date.getMonth()+1)}/${numberPadding(date.getFullYear())}`;
     
     const time = `${numberPadding(date.getHours())}:${numberPadding(date.getMinutes())}`;
-    if(inpVal != null){
-      socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
 
+    if(inpVal.trim() != ""){
+      socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
     }
     console.log(inpVal)
     console.log(messages)

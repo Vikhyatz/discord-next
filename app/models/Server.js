@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 const serverSchema = mongoose.Schema({
     serverName: {type: String, unique: true},
     serverIcon: String,
-    serverOwner: String,
+    serverOwner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     channel: [{
         channelName: String,
         roomName: String,

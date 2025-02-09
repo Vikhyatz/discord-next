@@ -11,7 +11,6 @@ import { serverContext } from '../context/serverContext';
 const SideNav1 = ({pathname}) => {
     const {data : session} = useSession();
     const [serversList, setServerList] = useState(null)
-    // const [serverCreateTracker, setServerCreateTracker] = useState(null);
 
     const {serverUpdate, setServerUpdate} = useContext(serverContext)
     
@@ -20,7 +19,6 @@ const SideNav1 = ({pathname}) => {
         const response = await fetch(`/api/server?current=${session.user.name}`);
         const data = await response.json();
         setServerList(data.joinedServers)
-        // console.log("here" , data.joinedServers)
       }
       fetchServers();
     }, [serverUpdate])

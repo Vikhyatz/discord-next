@@ -1,4 +1,5 @@
 import Server from "@/app/models/Server"
+import User from "@/app/models/User"
 import connectDB from "@/app/db/connectDb";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,9 +11,14 @@ export async function GET(request) {
 
     // also add another layer to check that the current user is inside the server as a member or not, there might be other servers with the same name
     // or maybe just add a modal or something to show the user and handle creating multiple servers of the same name
-    const channels = await Server.findOne({serverName: server});
-    // console.log(channels)
-    return new Response (JSON.stringify({channels}), {status: 200})
+    const serverData = await Server.findOne({serverName: server}).populate("serverOwner");
+    
+    // const serverOwnerId = serverData.serverOwner;
+    // const serverOwner = await User.findById({serverOwnerId})
+    // console.log(serverOwnerId)
+    // console.log(serverOwner)
+    console.log(serverData)
+    return new Response (JSON.stringify({serverData}), {status: 200})
 }
 
 
