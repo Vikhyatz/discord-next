@@ -4,7 +4,7 @@ import { usePathname, redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 
-
+// socket
 import { socket } from "@/app/socket";
 
 import SideNav1 from '../../../components/SideNav1';
@@ -162,25 +162,6 @@ const Page = () => {
                   )
 
                 })}
-
-            {/* <div className="flex items-center mb-2 ml-5">
-              <div className="w-10 h-10">
-                <img
-                  src="https://res.cloudinary.com/anyanime/image/upload/5eff0d8049bbdf8df8dc0762c4f526c0Kurizu39.png"
-                  alt="pfp"
-                  className="rounded-full"
-                />
-              </div>
-              <div className="ml-4">
-                <div className="flex items-baseline">
-                  <p className="text-[#f2f3f5] font-semibold">BeastCodZ</p>
-                  <p className="ml-4 text-[13px] text-[#808080] font-semibold scale-y-95">
-                    23/09/2023 00:39
-                  </p>
-                </div>
-                <div className="text-[#dbdee1]">Hop</div>
-              </div>
-            </div> */}
           </div>
 
           <form onSubmit={handleClick} className="absolute bottom-5 left-5 flex items-center bg-[#383A40] rounded-lg w-[94%] h-11">

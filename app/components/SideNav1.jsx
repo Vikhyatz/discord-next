@@ -23,7 +23,7 @@ const SideNav1 = ({pathname}) => {
       fetchServers();
     }, [serverUpdate])
 
-    console.log("this is the server list ", serversList)
+    // console.log("this is the server list ", serversList)
     
 
 

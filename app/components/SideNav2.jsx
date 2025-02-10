@@ -44,7 +44,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
         const fetchFriends = async ()=>{
             const response = await fetch(`/api/friends?current=${session.user.name}`);
             const data = await response.json();
-            console.log("this is the data for the direct messages: ", data)
+            // console.log("this is the data for the direct messages: ", data)
             setFriends(data.user.friends);
         }
         fetchFriends()
@@ -58,7 +58,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
                 console.log("this is the data of channels from the server", data)
                 setChannels(data.serverData.channel)
                 setServerOwner(data.serverData.serverOwner.name)
-                console.log("the server owner value will be: ", data.serverData.serverOwner.name)
+                // console.log("the server owner value will be: ", data.serverData.serverOwner.name)
             }
         }
         
@@ -69,7 +69,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
     const deleteServer = async ()=>{
         const response = await fetch(`/api/deleteServer?serverName=${serverSlug}`)
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         redirect('/friends')
     }
 
@@ -85,8 +85,8 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
         }
     }
 
-    console.log(serverOwner)
-    console.log(session.user.name)
+    // console.log(serverOwner)
+    // console.log(session.user.name)
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
@@ -149,7 +149,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             {
                 type === "server" && 
                 channels.map((channel, index)=>{
-                    return <Channel key={index} name={channel.channelName}/>
+                    return <Channel key={index} name={channel.channelName} link={`/server/${serverSlug}/${channel.channelName}`}/>
                 })
             }
 
