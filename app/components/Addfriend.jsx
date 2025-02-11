@@ -20,16 +20,11 @@ const Addfriend = () => {
     const inpVal = inp;
     const response = await fetch(`/api/addFriend?query=${inp}&current=${session.user.name}`);
     const data = await response.json();
-    console.log(data);
     if(data.message){ 
       setText(data.message)
-      console.log(data);
-      console.log("wrong username, try again")
     }
     else{
       setText("Request Sent!!")
-      console.log("sent request")
-      console.log(data);
     }
   }
   

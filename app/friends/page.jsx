@@ -22,7 +22,6 @@ import { FaUser } from "react-icons/fa6"
 
 const Page = () => {
   const pathname = usePathname()
-  // console.log(session)
 
   const [state, setstate] = useState("all")
   const [reqModal, setReqModal] = useState("close")

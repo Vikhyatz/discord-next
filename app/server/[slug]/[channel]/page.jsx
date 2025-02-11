@@ -11,8 +11,10 @@ import SideNav1 from '../../../components/SideNav1';
 import SideNav2 from '../../../components/SideNav2';
 
 const Page = () => {
-    const {date : session, status} = useSession()
+    const {data : session, status} = useSession()
     
+    // setInterval(() => {
+    // }, 500);
 
     const params = useParams();
     
@@ -22,10 +24,11 @@ const Page = () => {
     const [roomName, setRoomName] = useState("")
     const [messages, setMessages] = useState([])
 
+    const [audio] = useState(new Audio("/notification.mp3"));
+
     const ref = useRef();
     const messagecontainer = useRef();
 
-    console.log(params)
     const slug = decodeURIComponent(params.slug); // server name
     const channelName = decodeURIComponent(params.channel) // channel name
 
@@ -88,8 +91,6 @@ const Page = () => {
         if (inpVal.trim() != "") {
             socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
         }
-        console.log(inpVal)
-        console.log(messages)
         ref.current.value = ''
 
     }

@@ -26,8 +26,6 @@ const Page = () => {
             if(session == undefined){
                 setnotAbleToAccess(403)
             }
-            console.log(session)
-            console.log(response)
             setStatusCode(response.status)
             
         }
@@ -40,7 +38,7 @@ const Page = () => {
 
     if (status === "loading" || statusCode == 0) return <p>loading..</p>
     if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
-    if(statusCode === 404) return <h1 className='text-[40px]'>this server doesn't exist, please go back to <Link href="/" >home</Link></h1>
+    if(statusCode === 404) return <h1 className='text-[40px]'>this server does not exist, please go back to <Link href="/" >home</Link></h1>
     if(statusCode === 403) return <h1 className='text-[40px]'>YOU cannot access this server, please go back to <Link href="/" >home</Link></h1>
     if(notAbleToAccess === 403) return <h1 className='text-[40px] mt-[10px]'>Not able to access this server, please go back to <Link href="/" className='border-[2px] border-solid border-black p-[5px] rounded-[10px] bg-black text-white' >home</Link></h1>
 

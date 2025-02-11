@@ -20,7 +20,6 @@ export async function GET(request){
 
     // second check: if the user is a member of the server or not
     const userInServer = serverData.members.filter( (userId) => userId.toString() == userData._id.toString())
-    console.log("hello there", userInServer)
 
     // if there is nothing common in the userID and the members.ID
     if(userInServer == 0){

@@ -36,6 +36,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
     const [channels, setChannels] = useState([{channelName: "loading..."}])
     const [serverOwner, setServerOwner] = useState("")
+    const [serverId, setServerId] = useState("")
 
     // to handle the dropdown, for deleting the server
     const [selected, setSelected] = useState(false)
@@ -63,6 +64,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
                 console.log("this is the data of channels from the server", data)
                 setChannels(data.serverData.channel)
                 setServerOwner(data.serverData.serverOwner.name)
+                setServerId(data.serverData._id)
                 // console.log("the server owner value will be: ", data.serverData.serverOwner.name)
             }
         }
@@ -95,7 +97,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
     }
 
     const copyLink = () => {
-        navigator.clipboard.writeText (`localhost:3000/invite/${serverSlug}`);
+        navigator.clipboard.writeText (`localhost:3000/invite/${serverId}`);
         toast.success('Copied Link!')
     }
     
@@ -116,7 +118,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
             {type === "server" && 
             <>
-            <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[3px] mt-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={()=>{ serverOwner == session.user.name && setSelected(!selected)} } >
+            <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[3px] mt-[10px] transition-all duration-[0.1s] hover:bg-[#3F4248] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={()=>{ serverOwner == session.user.name && setSelected(!selected)} } >
                 <span className='ml-[20px]'>{serverSlug}</span>
 
                 {/* conditionally rendering the arrow button, will only render for the owner of the server */}
@@ -133,7 +135,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
                     <button onClick={deleteServer} className='bg-[black] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20}/></button>
 
-                    <Link href={`/invite/${serverSlug}`} onClick={copyLink} className='bg-[#fff] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[black] flex items-center justify-center select-none hover:bg-[black] hover:text-white '>Invite Link <FaCopy className='inline ml-[30px] z-[50]'/> </Link>
+                    <button onClick={copyLink} className='bg-[#fff] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[black] flex items-center justify-center select-none hover:bg-[black] hover:text-white '>Invite Link <FaCopy className='inline ml-[30px] z-[50]'/> </button>
                     <Toaster/>
 
                 </div>

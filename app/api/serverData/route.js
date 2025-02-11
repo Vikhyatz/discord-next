@@ -7,7 +7,6 @@ export async function GET(request) {
     await connectDB();
     const searchParams = request.nextUrl.searchParams;
     const server = searchParams.get("server");
-    console.log(server)
 
     // also add another layer to check that the current user is inside the server as a member or not, there might be other servers with the same name
     // or maybe just add a modal or something to show the user and handle creating multiple servers of the same name
@@ -15,9 +14,6 @@ export async function GET(request) {
     
     // const serverOwnerId = serverData.serverOwner;
     // const serverOwner = await User.findById({serverOwnerId})
-    // console.log(serverOwnerId)
-    // console.log(serverOwner)
-    console.log(serverData)
     return new Response (JSON.stringify({serverData}), {status: 200})
 }
 
@@ -37,9 +33,6 @@ export async function POST(request){
         { serverName },
         { $addToSet: { channel: { channelName, roomName } } }
     );
-    console.log(updatedChannels)
-    console.log(serverName)
-    console.log(channelName)
 
 
     return new Response(JSON.stringify({updatedChannels}))

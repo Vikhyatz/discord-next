@@ -16,8 +16,6 @@ const Page = () => {
   const pathname = usePathname()
   const { data: session, status } = useSession()
 
-  console.log(session)
-  console.log(status)
 
   const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState(0);
@@ -28,7 +26,6 @@ const Page = () => {
   const [audio] = useState(new Audio("/notification.mp3"));
   // dynamic slug
   const slug = decodeURIComponent(params.slug)
-  console.log(params)
   
   // SOCKET IO
   const ref = useRef();
@@ -38,7 +35,6 @@ const Page = () => {
   useEffect(() => {
     const checkFriends = async () => {
       const response = await fetch(`/api/checkUserAndFriends?user=${session.user.name}&friend=${slug}`)
-      console.log("the status code is: ", response.status)
       setValidFriend(response.status)
     }
     if(status === "authenticated"){
@@ -51,13 +47,11 @@ const Page = () => {
   // first use effect for the user to connect to the private room name
   useEffect(() => {
     // fetch the roomname created at the server side
-    console.log("here")
     const fetchRoomName = async ()=>{
 
       const response = await fetch(`/api/individualChat?current=${session.user.name}&friend=${slug}`)
       if(response.ok){
         const data = await response.json();
-        console.log("this should be the room name: ", data.roomName)
   
         // connect the user with the generated roomname
         socket.emit('joinRoom', data.roomName);
@@ -67,7 +61,6 @@ const Page = () => {
     if(status === "authenticated" && validFriend != 404){
       fetchRoomName()
     }
-    console.log(roomName)
   }, [status, session, validFriend])
 
 
@@ -117,8 +110,6 @@ const Page = () => {
     if(inpVal.trim() != ""){
       socket.emit("chat message", inpVal, roomName, session.user.name, finalDate, time);
     }
-    console.log(inpVal)
-    console.log(messages)
     ref.current.value = ''
     
   }
@@ -132,7 +123,7 @@ const Page = () => {
   if (status === "loading") return <p>Loading...</p>;
   if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
   if (validFriend === 403) return <h1 className='text-[40px]'>You cannot access this chat, you are not friends, please go back to <Link href="/" >home</Link></h1>
-  if (validFriend === 404) return <h1 className='text-[40px]'>User doesn't exist, please go back to <Link href="/" >home</Link></h1>
+  if (validFriend === 404) return <h1 className='text-[40px]'>User does not exist, please go back to <Link href="/" >home</Link></h1>
   
   
 
