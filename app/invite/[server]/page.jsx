@@ -8,7 +8,7 @@ import { useParams } from 'next/navigation'
 // toast
 import toast, { Toaster } from 'react-hot-toast';
 
-const page = () => {
+const Page = () => {
     const params = useParams()
     const {data : session, status} = useSession()
     
@@ -58,4 +58,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
