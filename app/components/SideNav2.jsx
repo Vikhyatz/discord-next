@@ -14,10 +14,15 @@ import { Tooltip } from 'react-tooltip'
 import CreateModal from './CreateModal'
 import Navlinks from './Navlinks'
 
+// toast
+import toast, { Toaster } from 'react-hot-toast';
+
 import { useSession } from 'next-auth/react'
 
 import { FaGear, FaUser, FaPlus } from "react-icons/fa6"
 import { IoIosLogOut } from "react-icons/io";
+import { FaCopy } from "react-icons/fa";
+
 import Channel from './Channel'
 import { requestModalContext } from '../context/reqContext'
 import { channelModalContext } from '../context/channelContext'
@@ -70,7 +75,11 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
         const response = await fetch(`/api/deleteServer?serverName=${serverSlug}`)
         const data = await response.json()
         // console.log(data)
-        redirect('/friends')
+        toast.success('deleted server')
+        setTimeout(() => {
+            redirect('/friends')
+
+        }, 1000);
     }
 
     if(type === "dm"){
@@ -85,8 +94,11 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
         }
     }
 
-    // console.log(serverOwner)
-    // console.log(session.user.name)
+    const copyLink = () => {
+        navigator.clipboard.writeText (`localhost:3000/invite/${serverSlug}`);
+        toast.success('Copied Link!')
+    }
+    
 
     return (
         <div className='w-[240px] h-[100vh] bg-[#2B2D31] flex items-center flex-col relative'>
@@ -104,10 +116,10 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
             {type === "server" && 
             <>
-            <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[3px] my-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={()=>{ serverOwner == session.user.name && setSelected(!selected)} } >
+            <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[3px] mt-[10px] transition-all duration-[0.1s] mt-[10px] hover:bg-[#3F4248] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={()=>{ serverOwner == session.user.name && setSelected(!selected)} } >
                 <span className='ml-[20px]'>{serverSlug}</span>
-                {/* {serverOwner == session.user.name
-                } */}
+
+                {/* conditionally rendering the arrow button, will only render for the owner of the server */}
                 {serverOwner == session.user.name && 
                 (
                     selected ? (<MdKeyboardArrowUp className='absolute right-[20px]' size={30}/>) : (<MdKeyboardArrowDown className='absolute right-[20px]' size={30}/>)
@@ -117,7 +129,14 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
             </div>
                 {/* dropdown  */}
                 {selected && 
-                <button onClick={deleteServer} className='bottom-[-40px] bg-[black] w-[224px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20}/></button>
+                <div className='bg-[#3F4248] w-[224px] flex items-center flex-col p-[10px] gap-[10px]'>
+
+                    <button onClick={deleteServer} className='bg-[black] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20}/></button>
+
+                    <Link href={`/invite/${serverSlug}`} onClick={copyLink} className='bg-[#fff] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[black] flex items-center justify-center select-none hover:bg-[black] hover:text-white '>Invite Link <FaCopy className='inline ml-[30px] z-[50]'/> </Link>
+                    <Toaster/>
+
+                </div>
                 }
             </>
             }

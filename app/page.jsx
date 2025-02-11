@@ -3,15 +3,7 @@
 import Link from "next/link";
 import AuthTest from "./components/AuthTest";
 
-// import { useSession } from "next-auth/react";
-// import { useRouter } from "next/navigation";
-
 export default function Home() {
-    // const { data: session } = useSession()
-    // const router = useRouter();
-    // if (session) {
-    //     router.push('/friends')
-    // }
     return (
         <>
             <div className="flex justify-center items-center w-full h-[100vh] overflow-hidden bg-[#313338] flex-col">

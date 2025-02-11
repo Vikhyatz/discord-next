@@ -38,7 +38,7 @@ const handler = NextAuth({
             const dbUser = await User.findOne({email: session.user.email});
             session.user.name = dbUser.name;
             return session
-          },
+        }
     }
 
 })

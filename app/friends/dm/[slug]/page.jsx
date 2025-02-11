@@ -9,20 +9,22 @@ import { socket } from "@/app/socket";
 
 import SideNav1 from '../../../components/SideNav1';
 import SideNav2 from '../../../components/SideNav2';
+import Link from 'next/link';
 
 const Page = () => {
   const params = useParams()
   const pathname = usePathname()
-  const { data: session } = useSession()
-  if(!session){
-    redirect('/')
-  }
+  const { data: session, status } = useSession()
 
-  
-  // TODO: CHECK IF THE FRIEND IS VALID OR NOT AND UPDATE THE NECESSAGEY NAMES THROUGH THE SLUG
-  // const [friends, setFriends] = useState(null);
+  console.log(session)
+  console.log(status)
+
   const [messages, setMessages] = useState([]);
   const [roomName, setRoomName] = useState(0);
+  const [validFriend, setValidFriend] = useState(0);
+  const [error, setError] = useState(null);
+
+
   const [audio] = useState(new Audio("/notification.mp3"));
   // dynamic slug
   const slug = decodeURIComponent(params.slug)
@@ -32,27 +34,41 @@ const Page = () => {
   const ref = useRef();
   const messagecontainer = useRef();
 
+  // check if both users are friends or not
+  useEffect(() => {
+    const checkFriends = async () => {
+      const response = await fetch(`/api/checkUserAndFriends?user=${session.user.name}&friend=${slug}`)
+      console.log("the status code is: ", response.status)
+      setValidFriend(response.status)
+    }
+    if(status === "authenticated"){
+      checkFriends()
+    }
+  }, [status, session])
   
 
+  
   // first use effect for the user to connect to the private room name
-  // socket.emit("")
-
-
   useEffect(() => {
     // fetch the roomname created at the server side
     console.log("here")
     const fetchRoomName = async ()=>{
-      const response = await fetch(`/api/individualChat?current=${session.user.name}&friend=${slug}`)
-      const data = await response.json();
-      console.log("this should be the room name: ", data.roomName)
 
-      // connect the user with the generated roomname
-      socket.emit('joinRoom', data.roomName);
-      setRoomName(data.roomName)
+      const response = await fetch(`/api/individualChat?current=${session.user.name}&friend=${slug}`)
+      if(response.ok){
+        const data = await response.json();
+        console.log("this should be the room name: ", data.roomName)
+  
+        // connect the user with the generated roomname
+        socket.emit('joinRoom', data.roomName);
+        setRoomName(data.roomName)
+      }
     }
-    fetchRoomName()
+    if(status === "authenticated" && validFriend != 404){
+      fetchRoomName()
+    }
     console.log(roomName)
-  }, [])
+  }, [status, session, validFriend])
 
 
   useEffect(() => {
@@ -72,13 +88,14 @@ const Page = () => {
     };
     
     // Subscribe to the 'chat message' event
-    socket.on('receive messsage', handleMessage);
-    
+    if(status === "authenticated"){
+      socket.on('receive messsage', handleMessage);
+    }
     // Cleanup: Unsubscribe from the event on component unmount
     return () => {
       socket.off('receive messsage', handleMessage);
     };
-  }, []);
+  }, [session, status]);
 
   const numberPadding = (num)=>{
     if (num < 10){
@@ -111,6 +128,11 @@ const Page = () => {
       messagecontainer.current.scrollTop = messagecontainer.current.scrollHeight;
     }
   }, [messages]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
+  if (validFriend === 403) return <h1 className='text-[40px]'>You cannot access this chat, you are not friends, please go back to <Link href="/" >home</Link></h1>
+  if (validFriend === 404) return <h1 className='text-[40px]'>User doesn't exist, please go back to <Link href="/" >home</Link></h1>
   
   
 

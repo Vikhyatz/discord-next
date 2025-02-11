@@ -32,6 +32,7 @@ export async function POST(request){
     const serverIcon = words.map(word => word.charAt(0)).join('');
 
     const currentUserData = await User.findOne({name: current});
+
     const createServer = await Server.create({
         serverName: serverName,
         serverIcon: serverIcon,
@@ -39,7 +40,10 @@ export async function POST(request){
         channel: [{
             channelName: 'General',// default channel of the server
             roomName: roomName, // random roomname for connecting through socket.io
-        }]
+        }],
+        members: [
+            currentUserData._id //append the user in the members array
+        ]
     })
 
     // add the server to the user's joined servers

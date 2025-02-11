@@ -27,18 +27,11 @@ const Page = () => {
   const [state, setstate] = useState("all")
   const [reqModal, setReqModal] = useState("close")
   
-
-  
   const { data: session, status } = useSession();
-  // const router = useRouter();
   
   // Redirect if the session is not available
   if (status === "loading") return <p>Loading...</p>;
-  if (!session) {
-    // router.push("/");
-    redirect("/");
-    
-  }
+  if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
 
   return (
     <>
