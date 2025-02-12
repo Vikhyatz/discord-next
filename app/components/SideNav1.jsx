@@ -28,7 +28,7 @@ const SideNav1 = ({pathname}) => {
 
 
     return (
-        <nav className='bg-[#1E1F22] w-[72px] h-[100vh] flex items-center flex-col'>
+        <nav className='bg-[#15181d] w-[72px] h-[calc(100vh-30px)] mt-[15px] ml-[10px] rounded-[20px] flex items-center flex-col'>
 
             <Navlinks pathname={pathname} name={<FaDiscord size={25} />} href="/friends" color="#5865F2" />
 

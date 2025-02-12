@@ -4,7 +4,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 
-export default function AuthTest() {
+export default function AuthComponents() {
     const { data: session } = useSession()
     if (session) {
         // return (

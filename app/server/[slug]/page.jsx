@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 import SideNav1 from '../../components/SideNav1';
 import SideNav2 from '../../components/SideNav2';
+import Loading from '@/app/components/Loading';
+import Error from '@/app/components/Error';
 
 const Page = () => {
     const { data: session , status} = useSession()
@@ -36,18 +38,18 @@ const Page = () => {
 
 
 
-    if (status === "loading" || statusCode == 0) return <p>loading..</p>
-    if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
-    if(statusCode === 404) return <h1 className='text-[40px]'>this server does not exist, please go back to <Link href="/" >home</Link></h1>
-    if(statusCode === 403) return <h1 className='text-[40px]'>YOU cannot access this server, please go back to <Link href="/" >home</Link></h1>
-    if(notAbleToAccess === 403) return <h1 className='text-[40px] mt-[10px]'>Not able to access this server, please go back to <Link href="/" className='border-[2px] border-solid border-black p-[5px] rounded-[10px] bg-black text-white' >home</Link></h1>
+    if (status === "loading" || statusCode == 0) return <Loading/>
+    if (status === "unauthenticated") return <Error text="you should probably go an authenticate" />
+    if(statusCode === 404) return <Error text="this server does not exist, please go back to home" />
+    if(statusCode === 403) return <Error text="YOU cannot access this server, please go back to home" />
+    if(notAbleToAccess === 403) return <Error text="Not able to access this server, please go back to home" />
 
 
 
     return (
         <>
             <channelModalContext.Provider value={{ channelUpdate, setChannelUpdate }}>
-                <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
+                <div className='w-full h-[100vh] flex bg-[#1c1f26] overflow-hidden'>
                     <SideNav1 pathname={pathname} />
                     <SideNav2 pathname={pathname} type="server" serverSlug={slug} />
 

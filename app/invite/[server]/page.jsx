@@ -7,6 +7,8 @@ import { useParams } from 'next/navigation'
 
 // toast
 import toast, { Toaster } from 'react-hot-toast';
+import Loading from '@/app/components/Loading'
+import Error from '@/app/components/Error'
 
 const Page = () => {
     const params = useParams()
@@ -24,10 +26,10 @@ const Page = () => {
     }, [])
 
     if(status === "loading"){
-        return <p>loading..</p>
+        return <Loading/>
     }
     if(status === "unauthenticated"){
-        return <p>you should probably go an authenticate</p>
+        return <Error text="you should probably go an authenticate" />
     }
 
     const handleAccept = async ()=>{

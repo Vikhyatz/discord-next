@@ -18,6 +18,8 @@ import { serverContext } from '../context/serverContext';
 
 // icons
 import { FaUser } from "react-icons/fa6"
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 
 const Page = () => {
@@ -29,19 +31,19 @@ const Page = () => {
   const { data: session, status } = useSession();
   
   // Redirect if the session is not available
-  if (status === "loading") return <p>Loading...</p>;
-  if (status === "unauthenticated") return <p>you should probably go an authenticate</p>
+  if (status === "loading") return <Loading/>;
+  if (status === "unauthenticated") return <Error text="You should probably go authenticate" />
 
   return (
     <>
     <requestModalContext.Provider value={{reqModal, setReqModal}} >
       
-      <div className='w-full h-[100vh] flex bg-[#313338] overflow-hidden'>
+      <div className='w-full h-[100vh] flex bg-[#1c1f26] overflow-hidden'>
         <SideNav1 pathname={pathname}/>
         <SideNav2 pathname={pathname} type="dm"/>
 
-        <main className="relative w-[calc(100%-312px)]">
-          <div className="flex items-center w-full h-[45px] bg-[#313338] border-b-[1.5px] border-[#202020] text-white font-semibold text-base">
+        <main className="relative w-[calc(100%-332px-40px)] h-[calc(100vh-30px)] ml-[10px] mt-[15px] rounded-[20px] bg-[#16181d]">
+          <div className="flex items-center w-full h-[45px] text-white font-semibold text-base">
 
             <div className='flex items-center text-[#949Ba4] transition-all duration-[0.1s]'>
               <FaUser size={18} className='ml-[20px]' />

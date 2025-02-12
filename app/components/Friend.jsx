@@ -34,7 +34,7 @@ const Friend = ({src, name, type, onUpdate, setModal}) => {
     }
 
     return (
-        <div className="w-[60%] h-[60px] flex justify-around items-center border-t-[1px] border-t-[#393B41] hover:bg-[#393B41] hover:rounded-[10px]">
+        <div className="w-[60%] h-[60px] flex justify-around items-center border-t-[1px] border-t-[#393b4138] hover:bg-[#393b4126] hover:rounded-[20px]">
             <div className='flex items-center justify-center '>
                 <div className="w-[32px] h-[32px] ml-[20px]">
                     <img
