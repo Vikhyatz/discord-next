@@ -105,7 +105,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
     return (
         <div className='flex flex-col'>
             {/* height of this div = screen - empty space - height of profile below - empty space */}
-            <div className='w-[240px] h-[calc(100vh-30px-52px-15px)] mt-[15px] bg-[#16181d] ml-[20px] rounded-[20px] flex items-center flex-col relative'>
+            <div className='w-[240px] h-[calc(100vh-30px-52px-15px)] mt-[15px] bg-[#16181d] ml-[15px] rounded-[20px] flex items-center flex-col relative'>
 
                 {type === "dm" && <Link
                     href="/friends/"
@@ -136,7 +136,6 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
                                     <button onClick={deleteServer} className='bg-[black] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20} /></button>
                                 }
 
-
                                 <button onClick={copyLink} className='bg-[#fff] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[black] flex items-center justify-center select-none hover:bg-[black] hover:text-white '>Invite Link <FaCopy className='inline ml-[30px] z-[50]' /> </button>
                                 <Toaster />
                             </div>
@@ -146,8 +145,7 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
                 {type === "dm" && <div className="w-[200px] text-[#949Ba4] text-[13px] font-bold p-[10px] pt-[15px] cursor-default mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white">DIRECT MESSAGES</div>}
 
-                {/* this modal is not working */}
-                {/* <Navlinks pathname={pathname} name={<FaPlus size={25} />} type="CreateChannelModal" href="" color="#23A559" /> */}
+
                 {type === "server" &&
                     <div className="w-[200px] text-[#949Ba4] text-[13px] flex justify-between items-center font-bold p-[10px] pt-[15px] mb-[10px] border-b-[1.5px] border-b-solid border-b-[#131313] scale-y-[0.96] hover:text-white select-none cursor-pointer" onClick={() => { serverOwner === session.user.name && setChannelModal("open") }}>
                         TEXT CHANNELS {serverOwner === session.user.name ? <FaPlus /> : null}
