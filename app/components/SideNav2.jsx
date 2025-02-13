@@ -120,26 +120,25 @@ const SideNav2 = ({ pathname, type, serverSlug }) => {
 
                 {type === "server" &&
                     <>
-                        <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[15px] mt-[10px] transition-all duration-[0.1s] hover:bg-[#3f424852] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={() => { serverOwner == session.user.name && setSelected(!selected) }} >
+                        <div className={`w-[224px] h-[42px] flex items-center text-white rounded-[15px] mt-[10px] transition-all duration-[0.1s] hover:bg-[#3f424852] hover:text-white relative cursor-pointer select-none ${selected && "bg-[#3f4248] text-white"} `} onClick={() => { setSelected(!selected) }} >
                             <span className='ml-[20px]'>{serverSlug}</span>
 
                             {/* conditionally rendering the arrow button, will only render for the owner of the server */}
-                            {serverOwner == session.user.name &&
-                                (
-                                    selected ? (<MdKeyboardArrowUp className='absolute right-[20px]' size={30} />) : (<MdKeyboardArrowDown className='absolute right-[20px]' size={30} />)
-                                )
+                            {
+                                selected ? (<MdKeyboardArrowUp className='absolute right-[20px]' size={30} />) : (<MdKeyboardArrowDown className='absolute right-[20px]' size={30} />)
                             }
 
                         </div>
                         {/* dropdown  */}
                         {selected &&
                             <div className='bg-[#3F4248] w-[224px] flex items-center flex-col p-[10px] gap-[10px]'>
+                                {serverOwner == session.user.name &&
+                                    <button onClick={deleteServer} className='bg-[black] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20} /></button>
+                                }
 
-                                <button onClick={deleteServer} className='bg-[black] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[red] flex items-center justify-center select-none hover:bg-[red] hover:text-white '>Delete Server <MdDelete className='inline ml-[30px] z-[50]' size={20} /></button>
 
                                 <button onClick={copyLink} className='bg-[#fff] w-[184px] h-[42px] transition-all duration-[0.1s] rounded-[5px] text-[black] flex items-center justify-center select-none hover:bg-[black] hover:text-white '>Invite Link <FaCopy className='inline ml-[30px] z-[50]' /> </button>
                                 <Toaster />
-
                             </div>
                         }
                     </>
